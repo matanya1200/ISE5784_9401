@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 /**
  * The Cylinder class represents a cylinder in 3D space.
@@ -33,24 +31,23 @@ public class Cylinder extends Tube{
      */
     @Override
     public Vector getNormal(Point point){
-//        // Calculate the base and top centers of the cylinder
-//        Point baseCenter = axisRay.getP0();
-//        Point topCenter = axisRay.getP0().add(axisRay.getDir().scale(height));
-//
-//        // Check if the point is on the base or top caps
-//        if (point.subtract(baseCenter).dotProduct(axisRay.getDir()) == 0) {
-//            return axisRay.getDir().scale(-1).normalize();
-//        }
-//        if (point.subtract(topCenter).dotProduct(axisRay.getDir()) == 0) {
-//            return axisRay.getDir().normalize();
-//        }
-//
-//        // Calculate the projection of the point on the axisRay
-//        double t = point.subtract(baseCenter).dotProduct(axisRay.getDir());
-//        Point o = baseCenter.add(axisRay.getDir().scale(t));
-//
-//        // The normal is the vector from the projected point to the given point, normalized
-//        return point.subtract(o).normalize();
-        return null;
+
+        Point p0 = axisRay.getP0();
+        Vector dir = axisRay.getDir();
+
+        // Calculate projection of point on the axis
+        Vector v = point.subtract(p0);
+        double t = dir.dotProduct(v);
+
+        // Check if point is on the cylinder's caps
+        if (Util.isZero(t)) {
+            return dir.scale(-1).normalize();
+        } else if (Util.isZero(t - height)) {
+            return dir.normalize();
+        }
+
+        // Otherwise, point is on the side surface
+        Point o = p0.add(dir.scale(t));
+        return point.subtract(o).normalize();
     }
 }

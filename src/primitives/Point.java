@@ -97,6 +97,6 @@ public class Point {
      */
     @Override
     public String toString(){
-        return "Point(" + xyz.toString() + ")";
+        return "Point(" + xyz.d1 + ", " + xyz.d2 + ", " + xyz.d3 + ")";
     }
 }

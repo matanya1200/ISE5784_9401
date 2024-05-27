@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 /**
@@ -11,7 +12,7 @@ import primitives.Vector;
 public class Tube extends RadialGeometry{
 
     /** The axis ray of the tube. */
-    private Ray axisRay;
+    protected Ray axisRay;
 
     /**
      * Constructs a Tube with a specified radius and axis ray.
@@ -32,17 +33,26 @@ public class Tube extends RadialGeometry{
      */
     @Override
     public Vector getNormal(Point point){
-//        // Calculate the projection of the point on the axisRay
-//        Point p0 = axisRay.getP0();
-//        Vector v = axisRay.getDir();
-//
-//        // Project the point onto the axis
-//        double t = point.subtract(p0).dotProduct(v);
-//        Point o = p0.add(v.scale(t));
-//
-//        // The normal is the vector from the projected point to the given point, normalized
-//        return point.subtract(o).normalize();
+        Point p0 = axisRay.getP0();
+        Vector dir = axisRay.getDir();
 
-        return null;
+        // Calculate the projection of the point onto the axis
+        double t = dir.dotProduct(point.subtract(p0));
+        Point o;
+
+        // Handle the case where point is exactly on the axis line
+        if (Util.isZero(t)) {
+            o = p0;
+        } else {
+            o = p0.add(dir.scale(t));
+        }
+
+        Vector normal = point.subtract(o);
+
+        if (normal.lengthSquared() == 0) {
+            throw new IllegalArgumentException("Point cannot be on the tube's axis");
+        }
+
+        return normal.normalize();
     }
 }

@@ -48,4 +48,12 @@ public class Ray {
                 ", direction=" + direction +
                 '}';
     }
+
+    public Point getP0() {
+        return head;
+    }
+
+    public Vector getDir() {
+        return direction;
+    }
 }

@@ -133,6 +133,6 @@ public class Vector extends Point{
      */
     @Override
     public String toString() {
-        return "Vector(" + xyz.toString() + ")";
+        return "Vector(" + xyz.d1 + ", " + xyz.d2 + ", " + xyz.d3 + ")";
     }
 }
