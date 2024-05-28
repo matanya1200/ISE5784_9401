@@ -92,6 +92,7 @@ public class Point {
     /**
      * Returns a string representation of the point.
      *
+     *
      * @return a string representation of the point
      */
     @Override
