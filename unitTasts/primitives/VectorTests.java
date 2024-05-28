@@ -2,10 +2,15 @@ package primitives;
 
 import org.junit.jupiter.api.Test;
 
+import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VectorTests {
 
+    @Test
+    void testCreation(){
+        assertThrows(IllegalArgumentException.class,() ->new Vector(0d,0d,0d),"ERROR: zero vector throws wrong exception");
+    }
     // ============ Equivalence Partitions Tests ==============
     @Test
     void testAdd() {
