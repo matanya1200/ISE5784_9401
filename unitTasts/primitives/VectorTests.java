@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VectorTests {
 
+    // =============== Boundary Values Tests ==================
+    //test create vector(0,0,0)
     @Test
     void testCreation(){
         assertThrows(IllegalArgumentException.class,() ->new Vector(0d,0d,0d),"ERROR: zero vector throws wrong exception");
