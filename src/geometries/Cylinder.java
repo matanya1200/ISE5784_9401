@@ -39,10 +39,12 @@ public class Cylinder extends Tube{
         Vector v = point.subtract(p0);
         double t = dir.dotProduct(v);
 
-        // Check if point is on the cylinder's caps
+        // Check if point is on the cylinder's bottom base
         if (Util.isZero(t)) {
             return dir.scale(-1).normalize();
-        } else if (Util.isZero(t - height)) {
+        }
+        // Check if point is on the cylinder's top base
+        else if (Util.isZero(t - height)) {
             return dir.normalize();
         }
 

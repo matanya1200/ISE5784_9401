@@ -53,7 +53,7 @@ public class Vector extends Point{
      */
     public Vector scale(double scalar) {
         if(isZero(scalar))
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("cant create vector zero");
         return new Vector(xyz.scale(scalar));
     }
 

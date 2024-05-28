@@ -73,8 +73,7 @@ public class Point {
      * @return the distance
      */
     public double distance(Point other){
-        double dis = Math.sqrt(distanceSquared(other));
-        return dis;
+        return Math.sqrt(distanceSquared(other));
     }
 
     /**

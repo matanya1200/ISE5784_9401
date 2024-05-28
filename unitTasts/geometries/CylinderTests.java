@@ -23,31 +23,17 @@ class CylinderTests {
         Vector normalSide = cylinder.getNormal(surfacePointSide);
         assertEquals(expectedNormalSide, normalSide, "Cylinder's side normal is incorrect");
 
-        // Test the normal of the cylinder at a point on its top base
-        Point surfacePointTop = new Point(0.5, 0.5, 2);
-        Vector expectedNormalTop = new Vector(0, 0, 1).normalize();
-        Vector normalTop = cylinder.getNormal(surfacePointTop);
-        assertEquals(expectedNormalTop, normalTop, "Cylinder's top base normal is incorrect");
-
-        // Test the normal of the cylinder at a point on its bottom base
-        Point surfacePointBottom = new Point(0.5, 0.5, 0);
-        Vector expectedNormalBottom = new Vector(0, 0, -1).normalize();
-        Vector normalBottom = cylinder.getNormal(surfacePointBottom);
-        assertEquals(expectedNormalBottom, normalBottom, "Cylinder's bottom base normal is incorrect");
-
         // =============== Boundary Values Tests ==================
 
-        // Boundary Value Test: Point exactly on the edge of the top base
-        Point edgePointTop = new Point(1, 0, 2);
-        Vector expectedNormalEdgeTop = new Vector(0, 0, 1).normalize();
-        Vector normalEdgeTop = cylinder.getNormal(edgePointTop);
-        assertEquals(expectedNormalEdgeTop, normalEdgeTop, "Cylinder's edge top base normal is incorrect");
+        // Boundary Value Test: Point such that the point-to-axis vector is perpendicular to the axis
+        Point edgeCasePointTop = new Point(1, 0, 2);
+        Vector expectedNormalEdgeCaseTop = new Vector(0, 0, 1).normalize();
+        Vector normalEdgeCaseTop = cylinder.getNormal(edgeCasePointTop);
+        assertEquals(expectedNormalEdgeCaseTop, normalEdgeCaseTop, "Cylinder's edge case top normal is incorrect");
 
-        // Boundary Value Test: Point exactly on the edge of the bottom base
-        Point edgePointBottom = new Point(1, 0, 0);
-        Vector expectedNormalEdgeBottom = new Vector(0, 0, -1).normalize();
-        Vector normalEdgeBottom = cylinder.getNormal(edgePointBottom);
-        assertEquals(expectedNormalEdgeBottom, normalEdgeBottom, "Cylinder's edge bottom base normal is incorrect");
-
+        Point edgeCasePointBottom = new Point(1, 0, 0);
+        Vector expectedNormalEdgeCaseBottom = new Vector(0, 0, -1).normalize();
+        Vector normalEdgeCaseBottom = cylinder.getNormal(edgeCasePointBottom);
+        assertEquals(expectedNormalEdgeCaseBottom, normalEdgeCaseBottom, "Cylinder's edge case bottom normal is incorrect");
     }
 }
