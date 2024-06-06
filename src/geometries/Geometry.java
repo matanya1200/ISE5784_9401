@@ -1,13 +1,13 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
+import java.util.List;
 
 /**
  * The Geometry interface represents a geometric object in 3D space.
  * It defines a method to calculate the normal vector to the surface at a given point.
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
 
     /**
      * Calculates the normal vector to the surface at the given point.

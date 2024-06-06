@@ -1,7 +1,14 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * The Sphere class represents a sphere in 3D space.
@@ -32,5 +39,53 @@ public class Sphere extends RadialGeometry{
     @Override
     public Vector getNormal(Point point){
         return point.subtract(center).normalize();
+    }
+
+    /**
+     * Finds the intersections of a given ray with the sphere.
+     * If there are no intersections, returns null.
+     * The list of intersections is created only if there are intersections.
+     *
+     * @param ray the ray to find intersections with
+     * @return a list of intersection points, or null if no intersections
+     */
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Vector u;
+        try {
+            u = center.subtract(p0); // Vector from ray's origin to the sphere's center
+        } catch (IllegalArgumentException e) {
+            // If p0 is the center of the sphere, return the point on the surface in the ray's direction
+            List<Point> intersections = new ArrayList<>();
+            intersections.add(p0.add(v.scale(radius)));
+            return intersections;
+        }
+
+        double tm = alignZero(v.dotProduct(u)); // Projection of u on v
+        double dSquared = alignZero(u.lengthSquared() - tm * tm); // Distance squared from the sphere's center to the ray
+        double rSquared = alignZero(radius * radius); // Sphere's radius squared
+
+        if (dSquared >= rSquared) {
+            return null; // No intersections if the distance is greater than the sphere's radius
+        }
+
+        double th = alignZero(Math.sqrt(rSquared - dSquared)); // Distance from the intersection points to tm
+        double t1 = alignZero(tm - th); // Distance to the first intersection point
+        double t2 = alignZero(tm + th); // Distance to the second intersection point
+
+        List<Point> intersections = new ArrayList<>();
+
+        if (t1 > 0) {
+            intersections.add(ray.getPoint(t1)); // Add the first intersection point if it's in the positive direction of the ray
+        }
+        if (t2 > 0) {
+            intersections.add(ray.getPoint(t2)); // Add the second intersection point if it's in the positive direction of the ray
+        }
+
+        return intersections.isEmpty() ? null : intersections; // Return null if no valid intersections
+
     }
 }

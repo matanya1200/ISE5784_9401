@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.*;
 
+import java.util.List;
+
 /**
  * The Cylinder class represents a cylinder in 3D space.
  * It extends Tube and includes an additional height property.
@@ -52,4 +54,11 @@ public class Cylinder extends Tube{
         Point o = p0.add(dir.scale(t));
         return point.subtract(o).normalize();
     }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
+    }
 }
+
+

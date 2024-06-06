@@ -1,7 +1,14 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * The Plane class represents a plane in 3D space defined by a point and a normal vector.
@@ -63,5 +70,45 @@ public class Plane implements Geometry{
      */
     public Vector getNormal(Point point){
         return normal;
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        // Calculate the denominator of the intersection formula
+        double denominator = normal.dotProduct(v);
+        if (isZero(denominator)) {
+            // The ray is parallel to the plane, no intersections
+            return null;
+        }
+
+        // Calculate the numerator of the intersection formula
+        Vector p0ToQ0;
+        try {
+            p0ToQ0 = q0.subtract(p0);
+        } catch (IllegalArgumentException e) {
+            // p0 is the same as q0, the ray starts from the plane
+            return null;
+        }
+
+        double numerator = normal.dotProduct(p0ToQ0);
+
+        double t = alignZero(numerator / denominator);
+
+        if (t <= 0) {
+            // The intersection is behind the ray's origin or on the origin itself
+            return null;
+        }
+
+        // Calculate the intersection point
+        Point intersectionPoint = ray.getPoint(t);
+
+        // Create the list of intersections and add the intersection point
+        List<Point> intersections = new ArrayList<>();
+        intersections.add(intersectionPoint);
+
+        return intersections;
     }
 }

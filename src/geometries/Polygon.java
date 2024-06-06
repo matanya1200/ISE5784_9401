@@ -1,10 +1,13 @@
 package geometries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.isZero;
+import static primitives.Util.alignZero;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 /**
@@ -92,4 +95,62 @@ public class Polygon implements Geometry {
         return plane.getNormal();
     }
 
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        // Find intersection with the plane
+        List<Point> planeIntersections = plane.findIntersections(ray);
+        if (planeIntersections == null) {
+            return null;
+        }
+
+        Point p = planeIntersections.get(0);
+
+        // Check if the intersection point is exactly at one of the vertices
+        for (Point vertex : vertices) {
+            if (p.equals(vertex)) {
+                return null;
+            }
+        }
+
+        // Check if the intersection point is inside the polygon
+        Vector v = ray.getDir();
+        Point p0 = ray.getP0();
+
+        Vector v1 = vertices.get(size - 1).subtract(p);
+        Vector v2 = vertices.get(0).subtract(p);
+
+        Vector n;
+        try {
+            n = v1.crossProduct(v2).normalize();
+        } catch (IllegalArgumentException e) {
+            return null; // אם v1 או v2 הם וקטור אפס, אין חיתוך
+        }
+
+        double sign = alignZero(v.dotProduct(n));
+        if (isZero(sign)) {
+            return null;
+        }
+        boolean positive = sign > 0;
+
+        for (int i = 1; i < size; ++i) {
+            v1 = v2;
+            v2 = vertices.get(i).subtract(p);
+
+            try {
+                n = v1.crossProduct(v2).normalize();
+            } catch (IllegalArgumentException e) {
+                return null; // אם v1 או v2 הם וקטור אפס, אין חיתוך
+            }
+
+            sign = alignZero(v.dotProduct(n));
+            if (isZero(sign)) {
+                return null;
+            }
+            if (positive != (sign > 0)) {
+                return null;
+            }
+        }
+
+        return List.of(p);
+    }
 }
