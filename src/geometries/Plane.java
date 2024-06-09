@@ -72,6 +72,13 @@ public class Plane implements Geometry{
         return normal;
     }
 
+    /**
+     * Finds the intersection points between the plane and a given ray.
+     *
+     * @param ray the ray with which intersections are to be found
+     * @return a list of intersection points between the plane and the ray,
+     *         or null if there are no intersections
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.getP0();

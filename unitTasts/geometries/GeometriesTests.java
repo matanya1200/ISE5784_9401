@@ -12,40 +12,50 @@ class GeometriesTests {
     @Test
     void testFindIntersections() {
 
-        // יצירת גופים גיאומטריים
-        Sphere sphere = new Sphere(new Point(1, 0, 0), 1);
-        Plane plane = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1));
-        Triangle triangle = new Triangle(new Point(0, 0, 0), new Point(1, 0, 0), new Point(0, 1, 0));
+        Geometries geometri = new Geometries();
 
-        // קרן לבדיקה
-        Ray ray1 = new Ray(new Point(-1, 0, 0), new Vector(1, 0, 0));
-        Ray ray2 = new Ray(new Point(0.5, -1, 2), new Vector(0, 1, 0));
-        Ray ray3 = new Ray(new Point(0, 0, -1), new Vector(1, 1, 1));
+        // =============== Boundary Values Tests ==================
 
-        // אוסף גיאומטריות
-        Geometries geometries = new Geometries(sphere, plane, triangle);
+        // TC11: Empty collection
+        assertNull(geometri.findIntersections(new Ray(
+                        new Point(1, 0, 0),
+                        new Vector(0, 1, 0))),
+                "Must not be intersections");
 
-        // אוסף גופים ריק (BVA)
-        Geometries emptyGeometries = new Geometries();
-        assertNull(emptyGeometries.findIntersections(ray1), "No intersections expected for an empty collection");
+        geometri.add(new Plane(
+                        new Point(1, 0, 0),
+                        new Point(0, 1, 0),
+                        new Point(0, 0, 1)),
+                new Triangle(
+                        new Point(1, 0, 0),
+                        new Point(0, 1, 0),
+                        new Point(0, 0, 1)),
+                new Sphere(new Point(0, 1, 0),1d));
 
-        // אף צורה לא נחתכת (BVA)
-        Ray rayOutside = new Ray(new Point(-3, 0, 0), new Vector(1, 1, 0));
-        assertNull(geometries.findIntersections(rayOutside), "No intersections expected when no shape is intersected");
+        // TC12: No intersection with any shape
+        assertNull(geometri.findIntersections(new Ray(
+                        new Point(4, 0, 0),
+                        new Vector(-4, 3, 4))),
+                "Must not be intersections");
 
-        // צורה אחת בלבד נחתכת (BVA)
-        List<Point> intersectionsOne = geometries.findIntersections(ray1);
-        assertNotNull(intersectionsOne);
-        assertEquals(2, intersectionsOne.size(), "Expected 2 intersections with one shape (sphere)");
+        // TC13: Intersection with one shape only
+        assertEquals(1, geometri.findIntersections(
+                        new Ray(new Point(1.5, 1.5, 2),
+                                new Vector(-2, -2, 1.5))).size(),
+                "Must be only one intersection(with plane)");
 
-        // כמה צורות (אך לא כולן) נחתכות (EP)
-        List<Point> intersectionsSome = geometries.findIntersections(ray2);
-        assertNotNull(intersectionsSome);
-        assertEquals(3, intersectionsSome.size(), "Expected 3 intersections with some shapes (triangle and plane)");
+        // TC14: Intersection with all shapes
+        assertEquals(4, geometri.findIntersections(
+                        new Ray(new Point(2, 2, 0.5),
+                                new Vector(-1, -1, 0))).size(),
+                "Must be four intersections. (2 in sphere, 1 in plane, 1 in triangle)");
 
-        // כל הצורות נחתכות (BVA)
-        List<Point> intersectionsAll = geometries.findIntersections(ray3);
-        assertNotNull(intersectionsAll);
-        assertEquals(4, intersectionsAll.size(), "Expected 4 intersections with all shapes");
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Intersection with couple shapes but not all
+        assertEquals(3, geometri.findIntersections(
+                        new Ray(new Point(2, 2, 0),
+                                new Vector(-2,-1,0.5))).size(),
+                "Must be three intersections. (2 in sphere, 1 in plane)");
     }
 }

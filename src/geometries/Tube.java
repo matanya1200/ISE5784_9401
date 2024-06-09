@@ -33,6 +33,7 @@ public class Tube extends RadialGeometry{
      *
      * @param point the point on the surface of the tube where the normal is to be calculated
      * @return the normal vector to the surface at the given point
+     * @throws IllegalArgumentException if the point is on the tube's axis
      */
     @Override
     public Vector getNormal(Point point){
