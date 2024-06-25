@@ -1,6 +1,8 @@
 package geometries;
 
-import primitives.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import static primitives.Util.alignZero;
  * The Triangle class represents a triangle in 3D space.
  * It is a specific type of polygon with exactly three vertices.
  */
-public class Triangle extends Polygon{
+public class Triangle extends Polygon {
 
     /**
      * Constructs a Triangle with the specified vertices.
@@ -29,7 +31,7 @@ public class Triangle extends Polygon{
      *
      * @param ray the ray with which intersections are to be found
      * @return a list of intersection points between the triangle and the ray,
-     *         or null if there are no intersections
+     * or null if there are no intersections
      */
     @Override
     public List<Point> findIntersections(Ray ray) {

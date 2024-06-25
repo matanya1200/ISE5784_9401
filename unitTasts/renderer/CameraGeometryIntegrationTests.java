@@ -1,22 +1,27 @@
 package renderer;
 
-import geometries.*;
-
-import primitives.*;
-
-import java.util.List;
+import geometries.Intersectable;
+import geometries.Plane;
+import geometries.Sphere;
+import geometries.Triangle;
+import org.junit.jupiter.api.Test;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
+import scene.Scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * Integration Tests for Camera intersection with geometries
  */
 public class CameraGeometryIntegrationTests {
-    private final Camera.Builder cameraBuilder = Camera.getBuilder().setLocation(Point.ZERO)
-            .setDirection(new Vector(0,0,-1),new Vector(0,-1,0)).setVpDistance(10)
-            .setVpSize(3,3);
+    private final Camera.Builder cameraBuilder = Camera.getBuilder()
+            .setRayTracer(new SimpleRayTracer(new Scene("Test")))
+            .setImageWriter(new ImageWriter("TestIntegration", 1, 1))
+            .setLocation(Point.ZERO)
+            .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0)).setVpDistance(10)
+            .setVpSize(3, 3);
 
     /**
      * Integration test method for constructing rays from camera and checking
@@ -25,8 +30,9 @@ public class CameraGeometryIntegrationTests {
     @Test
     void CameraGeometryIntegration() {
         Camera camera = cameraBuilder.build();
+
         // Sphere
-        testRayIntersections(camera,new Sphere(new Point(0,0,-3),1),18);
+        testRayIntersections(camera, new Sphere(new Point(0, 0, -3), 1), 18);
 
         // Plane
         testRayIntersections(camera, new Plane(new Point(0, 0, -4), new Vector(0, 0, 1)),
@@ -58,7 +64,7 @@ public class CameraGeometryIntegrationTests {
      */
     private void testRayIntersections(Camera camera, Intersectable geometry, int expectedIntersections) {
         int count = 0;
-        int nX = 3, nY=3;
+        int nX = 3, nY = 3;
 
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {

@@ -6,7 +6,7 @@ import static primitives.Util.isZero;
  * The Vector class represents a vector in 3D space.
  * It extends the Point class and provides vector-specific operations.
  */
-public class Vector extends Point{
+public class Vector extends Point {
 
     /**
      * Constructs a Vector with specified x, y, and z components.
@@ -17,7 +17,7 @@ public class Vector extends Point{
      * @param z the z component
      * @throws IllegalArgumentException if the vector is a zero vector
      */
-    public Vector(double x, double y, double z){
+    public Vector(double x, double y, double z) {
         this(new Double3(x, y, z));
     }
 
@@ -41,7 +41,7 @@ public class Vector extends Point{
      * @param other the vector to be added
      * @return the resulting vector
      */
-    public Vector add(Vector other){
+    public Vector add(Vector other) {
         return new Vector(this.xyz.add(other.xyz));
     }
 
@@ -52,7 +52,7 @@ public class Vector extends Point{
      * @return the resulting scaled vector
      */
     public Vector scale(double scalar) {
-        if(isZero(scalar))
+        if (isZero(scalar))
             throw new IllegalArgumentException("cant create vector zero");
         return new Vector(xyz.scale(scalar));
     }
@@ -64,7 +64,7 @@ public class Vector extends Point{
      * @return the dot product
      */
     public double dotProduct(Vector otherVector) {
-        return  xyz.d1 * otherVector.xyz.d1 +
+        return xyz.d1 * otherVector.xyz.d1 +
                 xyz.d2 * otherVector.xyz.d2 +
                 xyz.d3 * otherVector.xyz.d3;
     }
@@ -76,14 +76,14 @@ public class Vector extends Point{
      * @return the resulting cross product vector
      */
     public Vector crossProduct(Vector otherVector) {
-        if (this.normalize().equals(otherVector.normalize())){
+        if (this.normalize().equals(otherVector.normalize())) {
             throw new IllegalArgumentException("Cannot compute cross product: vectors are parallel");
         }
-         return new Vector(
-                 xyz.d2 * otherVector.xyz.d3 - xyz.d3 * otherVector.xyz.d2,
-                 xyz.d3 * otherVector.xyz.d1 - xyz.d1 * otherVector.xyz.d3,
-                 xyz.d1 * otherVector.xyz.d2 - xyz.d2 * otherVector.xyz.d1
-         );
+        return new Vector(
+                xyz.d2 * otherVector.xyz.d3 - xyz.d3 * otherVector.xyz.d2,
+                xyz.d3 * otherVector.xyz.d1 - xyz.d1 * otherVector.xyz.d3,
+                xyz.d1 * otherVector.xyz.d2 - xyz.d2 * otherVector.xyz.d1
+        );
     }
 
     /**
@@ -92,7 +92,7 @@ public class Vector extends Point{
      * @return the squared length
      */
     public double lengthSquared() {
-        return  xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3;
+        return xyz.d1 * xyz.d1 + xyz.d2 * xyz.d2 + xyz.d3 * xyz.d3;
     }
 
     /**

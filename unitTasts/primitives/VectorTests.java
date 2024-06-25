@@ -2,7 +2,6 @@ package primitives;
 
 import org.junit.jupiter.api.Test;
 
-import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VectorTests {
@@ -10,9 +9,10 @@ class VectorTests {
     // =============== Boundary Values Tests ==================
     //test create vector(0,0,0)
     @Test
-    void testCreation(){
-        assertThrows(IllegalArgumentException.class,() ->new Vector(0d,0d,0d),"ERROR: zero vector throws wrong exception");
+    void testCreation() {
+        assertThrows(IllegalArgumentException.class, () -> new Vector(0d, 0d, 0d), "ERROR: zero vector throws wrong exception");
     }
+
     // ============ Equivalence Partitions Tests ==============
     @Test
     void testAdd() {
@@ -92,7 +92,7 @@ class VectorTests {
     void testNormalize() {
         Vector v = new Vector(1, 2, 2);
         Vector result = v.normalize();
-        assertEquals(new Vector(1/3.0, 2/3.0, 2/3.0), result, "Normalize method is incorrect");
+        assertEquals(new Vector(1 / 3.0, 2 / 3.0, 2 / 3.0), result, "Normalize method is incorrect");
         assertEquals(1, result.length(), 0.00001, "Normalize method should return a vector of length 1");
     }
 

@@ -21,8 +21,8 @@ class ImageWriterTests {
         ImageWriter imageWriter = new ImageWriter(imageName, width, height);
 
         // Define background color (white) and grid color (blue)
-        Color backgroundColor = Color.RED; // White color
-        Color gridColor = Color.YELLOW; // BLUE color
+        Color backgroundColor = Color.BLUE; // White color
+        Color gridColor = Color.WHITE; // BLUE color
 
         // Fill the image with the background color
         for (int i = 0; i < height; i++) {

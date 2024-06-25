@@ -8,15 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
 
 /**
  * The Sphere class represents a sphere in 3D space.
  * It extends RadialGeometry and includes a center point and a radius.
  */
-public class Sphere extends RadialGeometry{
+public class Sphere extends RadialGeometry {
 
-    /** The center point of the sphere. */
+    /**
+     * The center point of the sphere.
+     */
     private Point center;
 
     /**
@@ -37,7 +38,7 @@ public class Sphere extends RadialGeometry{
      * @return the normal vector to the surface at the given point
      */
     @Override
-    public Vector getNormal(Point point){
+    public Vector getNormal(Point point) {
         return point.subtract(center).normalize();
     }
 

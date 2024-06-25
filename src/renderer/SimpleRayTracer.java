@@ -1,6 +1,8 @@
 package renderer;
 
-import primitives.*;
+import primitives.Color;
+import primitives.Point;
+import primitives.Ray;
 import scene.Scene;
 
 /**
@@ -8,14 +10,14 @@ import scene.Scene;
  * It performs ray tracing by finding intersections of rays with geometries
  * in the scene and calculates the color of the closest intersection point.
  */
-public class SimpleRayTracer extends RayTracerBase{
+public class SimpleRayTracer extends RayTracerBase {
 
     /**
      * Constructs a SimpleRayTracer with the specified scene.
      *
      * @param scene the scene to be used for ray tracing
      */
-    SimpleRayTracer(Scene scene){
+    SimpleRayTracer(Scene scene) {
         super(scene);
     }
 
@@ -30,7 +32,7 @@ public class SimpleRayTracer extends RayTracerBase{
     public Color traceRay(Ray ray) {
         Point point = ray.findClosestPoint(scene.geometries.findIntersections(ray));
 
-        if(point == null){
+        if (point == null) {
             return scene.background;
         }
 

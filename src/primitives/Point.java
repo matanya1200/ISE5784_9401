@@ -6,11 +6,14 @@ package primitives;
  */
 public class Point {
 
-    /** The coordinates of the point. */
+    /**
+     * A constant for the origin point (0,0,0).
+     */
+    public static final Point ZERO = new Point(0, 0, 0);
+    /**
+     * The coordinates of the point.
+     */
     protected Double3 xyz;
-
-    /** A constant for the origin point (0,0,0). */
-    public static final Point ZERO = new Point(0,0,0);
 
     /**
      * Constructs a Point with specified x, y, and z coordinates.
@@ -19,7 +22,7 @@ public class Point {
      * @param y the y coordinate
      * @param z the z coordinate
      */
-    public Point(double x, double y, double z){
+    public Point(double x, double y, double z) {
         xyz = new Double3(x, y, z);
     }
 
@@ -28,7 +31,7 @@ public class Point {
      *
      * @param xyz the Double3 object representing the coordinates
      */
-    Point(Double3 xyz){
+    Point(Double3 xyz) {
         this.xyz = xyz;
     }
 
@@ -38,7 +41,7 @@ public class Point {
      * @param other the point to be subtracted
      * @return the resulting vector
      */
-    public Vector subtract(Point other){
+    public Vector subtract(Point other) {
         return new Vector(xyz.subtract(other.xyz));
     }
 
@@ -48,7 +51,7 @@ public class Point {
      * @param other the vector to be added
      * @return the resulting point
      */
-    public Point add(Vector other){
+    public Point add(Vector other) {
         return new Point(xyz.add(other.xyz));
     }
 
@@ -58,7 +61,7 @@ public class Point {
      * @param other the other point
      * @return the squared distance
      */
-    public double distanceSquared(Point other){
+    public double distanceSquared(Point other) {
         double dx = this.xyz.d1 - other.xyz.d1;
         double dy = this.xyz.d2 - other.xyz.d2;
         double dz = this.xyz.d3 - other.xyz.d3;
@@ -72,7 +75,7 @@ public class Point {
      * @param other the other point
      * @return the distance
      */
-    public double distance(Point other){
+    public double distance(Point other) {
         return Math.sqrt(distanceSquared(other));
     }
 
@@ -83,20 +86,19 @@ public class Point {
      * @return true if the points are equal, false otherwise
      */
     @Override
-    public boolean equals(Object obj){
-        if(this == obj) return true;
-        if(!(obj instanceof Point other)) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Point other)) return false;
         return this.xyz.equals(other.xyz);
     }
 
     /**
      * Returns a string representation of the point.
      *
-     *
      * @return a string representation of the point
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "Point(" + xyz.d1 + ", " + xyz.d2 + ", " + xyz.d3 + ")";
     }
 }

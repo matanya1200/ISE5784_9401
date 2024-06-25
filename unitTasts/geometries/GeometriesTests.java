@@ -1,12 +1,12 @@
 package geometries;
 
-import geometries.*;
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class GeometriesTests {
     @Test
@@ -30,7 +30,7 @@ class GeometriesTests {
                         new Point(1, 0, 0),
                         new Point(0, 1, 0),
                         new Point(0, 0, 1)),
-                new Sphere(new Point(0, 1, 0),1d));
+                new Sphere(new Point(0, 1, 0), 1d));
 
         // TC12: No intersection with any shape
         assertNull(geometri.findIntersections(new Ray(
@@ -55,7 +55,7 @@ class GeometriesTests {
         // TC01: Intersection with couple shapes but not all
         assertEquals(3, geometri.findIntersections(
                         new Ray(new Point(2, 2, 0),
-                                new Vector(-2,-1,0.5))).size(),
+                                new Vector(-2, -1, 0.5))).size(),
                 "Must be three intersections. (2 in sphere, 1 in plane)");
     }
 }

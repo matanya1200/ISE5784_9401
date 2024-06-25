@@ -1,14 +1,23 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class SphereTests {
+
+    /**
+     * Test method for {@link geometries.Sphere#findIntersections(Ray)}.
+     */
+
+    private final Point p100 = new Point(1, 0, 0);
 
     @Test
     void testGetNormal() {
@@ -50,12 +59,6 @@ class SphereTests {
         normal = sphere.getNormal(surfacePoint);
         assertEquals(expectedNormal, normal, "Sphere's normal is incorrect");
     }
-
-    /**
-     * Test method for {@link geometries.Sphere#findIntersections(Ray)}.
-     */
-
-    private final Point p100 = new Point(1, 0, 0);
 
     @Test
     public void testFindIntersections() {

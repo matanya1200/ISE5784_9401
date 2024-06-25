@@ -1,6 +1,9 @@
 package renderer;
 
-import primitives.*;
+import primitives.Color;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import java.util.MissingResourceException;
 
@@ -10,39 +13,67 @@ import static primitives.Util.isZero;
  * The Camera class represents a camera in a 3D rendering system.
  * It defines the camera's position, orientation, screen size, and distance to the view plane.
  */
-public class Camera implements Cloneable{
+public class Camera implements Cloneable {
 
-    /** The position of the camera. */
-    private Point position;
+    /**
+     * The position of the camera.
+     */
+    private Point position = Point.ZERO;
 
-    /** The direction in which the camera is facing. */
-    private Vector vTo;
+    /**
+     * The direction in which the camera is facing.
+     */
+    private Vector vTo = null;
 
-    /** The up vector of the camera. */
-    private Vector vUp;
+    /**
+     * The up vector of the camera.
+     */
+    private Vector vUp = null;
 
-    /** The right vector of the camera. */
-    private Vector vRight;
+    /**
+     * The right vector of the camera.
+     */
+    private Vector vRight = null;
 
-    /** The width of the screen. */
-    private double screenWidth = 0.0;
+    /**
+     * The width of the screen.
+     */
+    private double screenWidth = 0.0d;
 
-    /** The height of the screen. */
-    private double screenHeight = 0.0;
+    /**
+     * The height of the screen.
+     */
+    private double screenHeight = 0.0d;
 
-    /** The distance from the camera to the screen. */
-    private double distanceToScreen = 0.0;
+    /**
+     * The distance from the camera to the screen.
+     */
+    private double distanceToScreen = 0.0d;
 
-    /** The ImageWriter for outputting the rendered image. */
+    /**
+     * The ImageWriter for outputting the rendered image.
+     */
     private ImageWriter imageWriter;
 
-    /** The RayTracerBase for tracing rays in the scene. */
+    /**
+     * The RayTracerBase for tracing rays in the scene.
+     */
     private RayTracerBase rayTracer;
 
     /**
      * Constructs a new Camera object.
      */
-    private Camera(){}
+    private Camera() {
+    }
+
+    /**
+     * Creates a new instance of the Builder class for constructing a Camera object.
+     *
+     * @return a new Builder object for constructing a Camera
+     */
+    public static Builder getBuilder() {
+        return new Builder();
+    }
 
     /**
      * Gets the position of the camera.
@@ -112,11 +143,11 @@ public class Camera implements Cloneable{
      *
      * @param nX the x-coordinate of the pixel
      * @param nY the y-coordinate of the pixel
-     * @param j the x-coordinate of the pixel in the screen
-     * @param i the y-coordinate of the pixel in the screen
+     * @param j  the x-coordinate of the pixel in the screen
+     * @param i  the y-coordinate of the pixel in the screen
      * @return the ray from the camera through the specified pixel
      */
-    public Ray constructRay(int nX, int nY, int j, int i){
+    public Ray constructRay(int nX, int nY, int j, int i) {
         // Calculate the center point of the view plane
         Point pCenter = position.add(vTo.scale(distanceToScreen));
 
@@ -147,7 +178,7 @@ public class Camera implements Cloneable{
     /**
      * Renders the image by tracing rays through each pixel.
      */
-    public void renderImage(){
+    public void renderImage() {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
@@ -164,19 +195,19 @@ public class Camera implements Cloneable{
      *
      * @param nX the number of pixels in the x direction
      * @param nY the number of pixels in the y direction
-     * @param j the x-coordinate of the pixel
-     * @param i the y-coordinate of the pixel
+     * @param j  the x-coordinate of the pixel
+     * @param i  the y-coordinate of the pixel
      */
     private void castRay(int nX, int nY, int j, int i) {
-        Ray ray = constructRay(nX,nY,j,i);
+        Ray ray = constructRay(nX, nY, j, i);
         Color color = rayTracer.traceRay(ray);
-        imageWriter.writePixel(j,i,color);
+        imageWriter.writePixel(j, i, color);
     }
 
     /**
      * Writes the rendered image to a file.
      */
-    public void writeToImage(){
+    public void writeToImage() {
         imageWriter.writeToImage();
     }
 
@@ -184,7 +215,7 @@ public class Camera implements Cloneable{
      * Prints a grid on the image with the specified interval and color.
      *
      * @param interval the interval between grid lines
-     * @param color the color of the grid lines
+     * @param color    the color of the grid lines
      */
     public void printGrid(int interval, Color color) {
         for (int j = 0; j < imageWriter.getNx(); j++)
@@ -193,39 +224,16 @@ public class Camera implements Cloneable{
                     imageWriter.writePixel(j, i, color);
     }
 
-
-    /**
-     * Creates a new instance of the Builder class for constructing a Camera object.
-     *
-     * @return a new Builder object for constructing a Camera
-     */
-    public static Builder getBuilder() {
-        return new Builder();
-    }
-
     /**
      * The Builder class provides a fluent interface for building a Camera object.
      */
-    public static class Builder{
-
-        /** The camera object being built. */
-        private final Camera camera;
+    public static class Builder {
 
         /**
-         * Constructs a new Builder object.
+         * The camera object being built.
          */
-        private Builder() {
-            camera = new Camera();
-        }
+        private final Camera camera = new Camera();
 
-        /**
-         * Constructs a new Builder object with the specified camera object.
-         *
-         * @param camera the camera object to use
-         */
-        private Builder(Camera camera) {
-            this.camera = camera;
-        }
 
         /**
          * Sets the position of the camera.
@@ -251,7 +259,7 @@ public class Camera implements Cloneable{
          * @return the Builder object
          * @throws IllegalArgumentException if the vectors are null or not perpendicular
          */
-        public Builder setDirection(Vector to, Vector up){
+        public Builder setDirection(Vector to, Vector up) {
             if (to == null || up == null) {
                 throw new IllegalArgumentException("Vectors cannot be null");
             }
@@ -267,12 +275,12 @@ public class Camera implements Cloneable{
         /**
          * Sets the viewport size of the camera.
          *
-         * @param width the width of the viewport
+         * @param width  the width of the viewport
          * @param height the height of the viewport
          * @return the Builder object
          * @throws IllegalArgumentException if the dimensions are not positive
          */
-        public Builder setVpSize(double width, double height){
+        public Builder setVpSize(double width, double height) {
             if (width <= 0 || height <= 0) {
                 throw new IllegalArgumentException("Viewport dimensions must be positive");
             }
@@ -289,7 +297,7 @@ public class Camera implements Cloneable{
          * @return the Builder object
          * @throws IllegalArgumentException if the distance is not positive
          */
-        public Builder setVpDistance(double distance){
+        public Builder setVpDistance(double distance) {
             if (distance <= 0) {
                 throw new IllegalArgumentException("View plane distance must be positive");
             }
@@ -304,7 +312,7 @@ public class Camera implements Cloneable{
          * @param imageWriter the ImageWriter to set
          * @return the Builder object
          */
-        public Builder setImageWriter(ImageWriter imageWriter){
+        public Builder setImageWriter(ImageWriter imageWriter) {
             camera.imageWriter = imageWriter;
             return this;
         }
@@ -315,7 +323,7 @@ public class Camera implements Cloneable{
          * @param rayTracer the RayTracer to set
          * @return the Builder object
          */
-        public Builder setRayTracer(RayTracerBase rayTracer){
+        public Builder setRayTracer(RayTracerBase rayTracer) {
             camera.rayTracer = rayTracer;
             return this;
         }
@@ -332,33 +340,38 @@ public class Camera implements Cloneable{
             String missingResource = "Missing Resource";
             if (camera.position == null)
                 throw new MissingResourceException(missingResource, Camera.class.getSimpleName(), "location");
+
             if (camera.vUp == null || camera.vTo == null)
                 throw new MissingResourceException(missingResource, Camera.class.getSimpleName(), "direction");
+
             if (camera.screenWidth == 0 || camera.screenHeight == 0)
                 throw new MissingResourceException(missingResource, Camera.class.getSimpleName(), "viewPlaneSize");
+
             if (camera.distanceToScreen == 0.0)
                 throw new MissingResourceException(missingResource, Camera.class.getSimpleName(), "viewPlanDistance");
 
-            if(camera.vTo.crossProduct(camera.vUp).length() == 0)
+            if (camera.vTo.crossProduct(camera.vUp).length() == 0)
                 throw new IllegalArgumentException("Vto and Vup are parallel");
-            if(camera.screenHeight < 0.0 || camera.screenWidth < 0.0)
+
+            if (camera.screenHeight < 0.0 || camera.screenWidth < 0.0)
                 throw new IllegalArgumentException("Negative size");// checking the parameters himself
-            if(camera.distanceToScreen < 0.0)
+
+            if (camera.distanceToScreen < 0.0)
                 throw new IllegalArgumentException("Negative distance");
 
-            if(camera.vRight == null)
-                camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
-
             if (camera.imageWriter == null)
-                throw new MissingResourceException(missingResource,Camera.class.getName(),"imageWriter");
+                throw new MissingResourceException(missingResource, Camera.class.getName(), "imageWriter");
 
             if (camera.rayTracer == null)
                 throw new MissingResourceException(missingResource, Camera.class.getName(), "rayTracer");
 
+            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+
+
             try {
                 return (Camera) camera.clone();
-            }catch (CloneNotSupportedException e){
-                throw new AssertionError();
+            } catch (CloneNotSupportedException e) {
+               return null;
             }
         }
     }

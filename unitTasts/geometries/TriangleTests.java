@@ -1,13 +1,19 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class TriangleTests {
+
+    // משתנים של נקודות וויאקטורים לבדיקות
+    private final Point p1 = new Point(0, 0, 0);
+    private final Point p2 = new Point(1, 0, 0);
+    private final Point p3 = new Point(0, 1, 0);
 
     @Test
     void testGetNormal() {
@@ -31,10 +37,6 @@ class TriangleTests {
         assertEquals(expectedNormal, normal, "Triangle's normal is incorrect");
     }
 
-    // משתנים של נקודות וויאקטורים לבדיקות
-    private final Point p1 = new Point(0, 0, 0);
-    private final Point p2 = new Point(1, 0, 0);
-    private final Point p3 = new Point(0, 1, 0);
     /**
      * Test method for {@link geometries.Triangle#findIntersections(Ray)}.
      */

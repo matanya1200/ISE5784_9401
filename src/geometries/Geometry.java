@@ -1,7 +1,7 @@
 package geometries;
 
-import primitives.*;
-import java.util.List;
+import primitives.Point;
+import primitives.Vector;
 
 /**
  * The Geometry interface represents a geometric object in 3D space.

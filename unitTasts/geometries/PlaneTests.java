@@ -1,14 +1,23 @@
 package geometries;
 
 import org.junit.jupiter.api.Test;
-import primitives.*;
-
-import java.util.List;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaneTests {
     // ============ Equivalence Partitions Tests ==============
+
+    // משתנים של נקודות וויאקטורים לבדיקות
+    private final Point p0 = new Point(0, 0, 0);
+    private final Point p1 = new Point(1, 0, 0);
+    private final Point p2 = new Point(0, 1, 0);
+    private final Point p3 = new Point(0, 0, 1);
+    private final Vector v001 = new Vector(0, 0, 1);
+    private final Vector v100 = new Vector(1, 0, 0);
+    private final Vector v111 = new Vector(1, 1, 1);
 
     @Test
     void testGetNormalWithPoint() {
@@ -77,15 +86,6 @@ class PlaneTests {
         assertThrows(IllegalArgumentException.class, () -> new Plane(p1, p2, p3),
                 "Expected IllegalArgumentException for identical points");
     }
-
-    // משתנים של נקודות וויאקטורים לבדיקות
-    private final Point p0 = new Point(0, 0, 0);
-    private final Point p1 = new Point(1, 0, 0);
-    private final Point p2 = new Point(0, 1, 0);
-    private final Point p3 = new Point(0, 0, 1);
-    private final Vector v001 = new Vector(0, 0, 1);
-    private final Vector v100 = new Vector(1, 0, 0);
-    private final Vector v111 = new Vector(1, 1, 1);
 
     @Test
     public void testFindIntersections() {

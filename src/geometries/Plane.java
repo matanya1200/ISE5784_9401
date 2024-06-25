@@ -13,12 +13,16 @@ import static primitives.Util.isZero;
 /**
  * The Plane class represents a plane in 3D space defined by a point and a normal vector.
  */
-public class Plane implements Geometry{
+public class Plane implements Geometry {
 
-    /** A point on the plane. */
+    /**
+     * A point on the plane.
+     */
     private final Point q0;
 
-    /** The normal vector to the plane. */
+    /**
+     * The normal vector to the plane.
+     */
     private final Vector normal;
 
     /**
@@ -28,7 +32,7 @@ public class Plane implements Geometry{
      * @param y the second point in the plane
      * @param z the third point in the plane
      */
-    public Plane(Point x, Point y, Point z){
+    public Plane(Point x, Point y, Point z) {
         this.q0 = x;
 
         Vector v1 = y.subtract(x);
@@ -45,7 +49,7 @@ public class Plane implements Geometry{
     /**
      * Constructs a Plane given a point on the plane and a normal vector.
      *
-     * @param q0 the point on the plane
+     * @param q0     the point on the plane
      * @param normal the normal vector to the plane
      */
     public Plane(Point q0, Vector normal) {
@@ -58,7 +62,7 @@ public class Plane implements Geometry{
      *
      * @return the normal vector to the plane
      */
-    public Vector getNormal(){
+    public Vector getNormal() {
         return normal;
     }
 
@@ -68,7 +72,7 @@ public class Plane implements Geometry{
      * @param point the point at which the normal is to be calculated (ignored in this implementation)
      * @return the normal vector to the plane
      */
-    public Vector getNormal(Point point){
+    public Vector getNormal(Point point) {
         return normal;
     }
 
@@ -77,7 +81,7 @@ public class Plane implements Geometry{
      *
      * @param ray the ray with which intersections are to be found
      * @return a list of intersection points between the plane and the ray,
-     *         or null if there are no intersections
+     * or null if there are no intersections
      */
     @Override
     public List<Point> findIntersections(Ray ray) {

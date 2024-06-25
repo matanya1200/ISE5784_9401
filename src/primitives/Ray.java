@@ -9,20 +9,24 @@ import static primitives.Util.isZero;
  */
 public class Ray {
 
-    /** The origin point of the ray. */
+    /**
+     * The origin point of the ray.
+     */
     private final Point head;
 
-    /** The direction vector of the ray. */
+    /**
+     * The direction vector of the ray.
+     */
     private final Vector direction;
 
     /**
      * Constructs a Ray with a specified origin point and direction vector.
      * The direction vector is normalized.
      *
-     * @param head the origin point of the ray
+     * @param head      the origin point of the ray
      * @param direction the direction vector of the ray
      */
-    public Ray(Point head, Vector direction){
+    public Ray(Point head, Vector direction) {
         this.head = head;
         this.direction = direction.normalize();
     }
@@ -63,6 +67,7 @@ public class Ray {
 
     /**
      * Get a point on the ray at a distance t from p0.
+     *
      * @param t distance from p0
      * @return the point at distance t
      */
@@ -79,16 +84,16 @@ public class Ray {
      * @param points the list of points to search through
      * @return the closest point to the ray's starting point, or null if the list is empty
      */
-    public Point findClosestPoint(List<Point> points){
-        if(points == null || points.isEmpty()){
+    public Point findClosestPoint(List<Point> points) {
+        if (points == null || points.isEmpty()) {
             return null;
         }
         double closestDistance = Double.POSITIVE_INFINITY;
         double d;
         Point closestPoint = points.get(0);
-        for(Point p:points){
+        for (Point p : points) {
             d = head.distanceSquared(p);
-            if(d < closestDistance){
+            if (d < closestDistance) {
                 closestDistance = d;
                 closestPoint = p;
             }

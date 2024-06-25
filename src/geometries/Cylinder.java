@@ -1,6 +1,9 @@
 package geometries;
 
-import primitives.*;
+import primitives.Point;
+import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
 
 import java.util.List;
 
@@ -8,17 +11,19 @@ import java.util.List;
  * The Cylinder class represents a cylinder in 3D space.
  * It extends Tube and includes an additional height property.
  */
-public class Cylinder extends Tube{
+public class Cylinder extends Tube {
 
-    /** The height of the cylinder. */
+    /**
+     * The height of the cylinder.
+     */
     private double height;
 
     /**
      * Constructs a Cylinder with a specified radius, axis ray, and height.
      *
-     * @param radius the radius of the cylinder
+     * @param radius  the radius of the cylinder
      * @param axisRay the axis ray of the cylinder
-     * @param height the height of the cylinder
+     * @param height  the height of the cylinder
      */
     public Cylinder(double radius, Ray axisRay, double height) {
         super(radius, axisRay);
@@ -32,7 +37,7 @@ public class Cylinder extends Tube{
      * @return the normal vector to the surface at the given point
      */
     @Override
-    public Vector getNormal(Point point){
+    public Vector getNormal(Point point) {
 
         Point p0 = axisRay.getP0();
         Vector dir = axisRay.getDir();

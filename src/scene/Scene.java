@@ -15,6 +15,7 @@ public class Scene {
 
     /**
      * Constructor accepting the name of the scene
+     *
      * @param name the name of the scene
      */
     public Scene(String name) {
@@ -23,6 +24,7 @@ public class Scene {
 
     /**
      * Set the background color and return the scene (for method chaining)
+     *
      * @param background the background color to set
      * @return the current scene object
      */
@@ -33,6 +35,7 @@ public class Scene {
 
     /**
      * Set the ambient light and return the scene (for method chaining)
+     *
      * @param ambientLight the ambient light to set
      * @return the current scene object
      */
@@ -43,6 +46,7 @@ public class Scene {
 
     /**
      * Set the geometries and return the scene (for method chaining)
+     *
      * @param geometries the geometries to set
      * @return the current scene object
      */

@@ -10,14 +10,16 @@ public abstract class RayTracerBase {
 
     /**
      * Constructor that accepts a scene.
+     *
      * @param scene the scene to trace rays in.
      */
-    RayTracerBase(Scene scene){
+    RayTracerBase(Scene scene) {
         this.scene = scene;
     }
 
     /**
      * Trace a ray and return the color of the closest intersection.
+     *
      * @param ray the ray to trace.
      * @return the color at the closest intersection.
      */
