@@ -178,7 +178,7 @@ public class Camera implements Cloneable {
     /**
      * Renders the image by tracing rays through each pixel.
      */
-    public void renderImage() {
+    public Camera renderImage() {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
@@ -188,6 +188,7 @@ public class Camera implements Cloneable {
             }
         }
         //throw new RuntimeException("UnsupportedOperationException");
+        return this;
     }
 
     /**
@@ -217,11 +218,13 @@ public class Camera implements Cloneable {
      * @param interval the interval between grid lines
      * @param color    the color of the grid lines
      */
-    public void printGrid(int interval, Color color) {
+    public Camera printGrid(int interval, Color color) {
         for (int j = 0; j < imageWriter.getNx(); j++)
             for (int i = 0; i < imageWriter.getNy(); i++)
                 if (isZero(j % interval) || isZero(i % interval))
                     imageWriter.writePixel(j, i, color);
+
+        return this;
     }
 
     /**
@@ -371,7 +374,7 @@ public class Camera implements Cloneable {
             try {
                 return (Camera) camera.clone();
             } catch (CloneNotSupportedException e) {
-               return null;
+                return null;
             }
         }
     }

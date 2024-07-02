@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
 /**
  * The Plane class represents a plane in 3D space defined by a point and a normal vector.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
     /**
      * A point on the plane.
@@ -57,6 +57,10 @@ public class Plane implements Geometry {
         this.normal = normal.normalize();
     }
 
+    public Point getPoint() {
+        return q0;
+    }
+
     /**
      * Returns the normal vector to the plane.
      *
@@ -72,19 +76,13 @@ public class Plane implements Geometry {
      * @param point the point at which the normal is to be calculated (ignored in this implementation)
      * @return the normal vector to the plane
      */
+    @Override
     public Vector getNormal(Point point) {
         return normal;
     }
 
-    /**
-     * Finds the intersection points between the plane and a given ray.
-     *
-     * @param ray the ray with which intersections are to be found
-     * @return a list of intersection points between the plane and the ray,
-     * or null if there are no intersections
-     */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -113,13 +111,6 @@ public class Plane implements Geometry {
             return null;
         }
 
-        // Calculate the intersection point
-        Point intersectionPoint = ray.getPoint(t);
-
-        // Create the list of intersections and add the intersection point
-        List<Point> intersections = new ArrayList<>();
-        intersections.add(intersectionPoint);
-
-        return intersections;
+        return List.of(new GeoPoint(this,ray.getPoint(t)));
     }
 }

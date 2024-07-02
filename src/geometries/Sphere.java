@@ -42,16 +42,8 @@ public class Sphere extends RadialGeometry {
         return point.subtract(center).normalize();
     }
 
-    /**
-     * Finds the intersections of a given ray with the sphere.
-     * If there are no intersections, returns null.
-     * The list of intersections is created only if there are intersections.
-     *
-     * @param ray the ray to find intersections with
-     * @return a list of intersection points, or null if no intersections
-     */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -60,8 +52,8 @@ public class Sphere extends RadialGeometry {
             u = center.subtract(p0); // Vector from ray's origin to the sphere's center
         } catch (IllegalArgumentException e) {
             // If p0 is the center of the sphere, return the point on the surface in the ray's direction
-            List<Point> intersections = new ArrayList<>();
-            intersections.add(p0.add(v.scale(radius)));
+            List<GeoPoint> intersections = new ArrayList<>();
+            intersections.add(new GeoPoint(this,p0.add(v.scale(radius))));
             return intersections;
         }
 
@@ -77,13 +69,13 @@ public class Sphere extends RadialGeometry {
         double t1 = alignZero(tm - th); // Distance to the first intersection point
         double t2 = alignZero(tm + th); // Distance to the second intersection point
 
-        List<Point> intersections = new ArrayList<>();
+        List<GeoPoint> intersections = new ArrayList<>();
 
         if (t1 > 0) {
-            intersections.add(ray.getPoint(t1)); // Add the first intersection point if it's in the positive direction of the ray
+            intersections.add(new GeoPoint(this,ray.getPoint(t1))); // Add the first intersection point if it's in the positive direction of the ray
         }
         if (t2 > 0) {
-            intersections.add(ray.getPoint(t2)); // Add the second intersection point if it's in the positive direction of the ray
+            intersections.add(new GeoPoint(this,ray.getPoint(t2))); // Add the second intersection point if it's in the positive direction of the ray
         }
 
         return intersections.isEmpty() ? null : intersections; // Return null if no valid intersections

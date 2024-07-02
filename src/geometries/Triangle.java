@@ -26,15 +26,8 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
 
-    /**
-     * Finds intersection points between the triangle and a given ray.
-     *
-     * @param ray the ray with which intersections are to be found
-     * @return a list of intersection points between the triangle and the ray,
-     * or null if there are no intersections
-     */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         // First, find the intersection with the plane of the triangle
         Plane plane = new Plane(vertices.get(0), vertices.get(1), vertices.get(2));
         List<Point> planeIntersections = plane.findIntersections(ray);
@@ -63,8 +56,8 @@ public class Triangle extends Polygon {
 
         // Check if the point is inside the triangle
         if ((sign1 > 0 && sign2 > 0 && sign3 > 0) || (sign1 < 0 && sign2 < 0 && sign3 < 0)) {
-            List<Point> intersections = new ArrayList<>();
-            intersections.add(p);
+            List<GeoPoint> intersections = new ArrayList<>();
+            intersections.add(new GeoPoint(this,p));
             return intersections;
         }
 

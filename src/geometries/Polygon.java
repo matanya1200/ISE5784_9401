@@ -15,7 +15,7 @@ import static primitives.Util.isZero;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -100,26 +100,20 @@ public class Polygon implements Geometry {
         return plane.getNormal();
     }
 
-    /**
-     * Finds intersection points between the polygon and a given ray.
-     *
-     * @param ray the ray with which intersections are to be found
-     * @return a list of intersection points between the polygon and the ray,
-     * or null if there are no intersections
-     */
+
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         // Find intersection with the plane
-        List<Point> planeIntersections = plane.findIntersections(ray);
+        List<GeoPoint> planeIntersections = plane.findGeoIntersectionsHelper(ray);
         if (planeIntersections == null) {
             return null;
         }
 
-        Point p = planeIntersections.get(0);
+        GeoPoint gp = planeIntersections.get(0);
 
         // Check if the intersection point is exactly at one of the vertices
         for (Point vertex : vertices) {
-            if (p.equals(vertex)) {
+            if (gp.point.equals(vertex)) {
                 return null;
             }
         }
@@ -128,8 +122,8 @@ public class Polygon implements Geometry {
         Vector v = ray.getDir();
         Point p0 = ray.getP0();
 
-        Vector v1 = vertices.get(size - 1).subtract(p);
-        Vector v2 = vertices.get(0).subtract(p);
+        Vector v1 = vertices.get(size - 1).subtract(gp.point);
+        Vector v2 = vertices.get(0).subtract(gp.point);
 
         Vector n;
         try {
@@ -146,7 +140,7 @@ public class Polygon implements Geometry {
 
         for (int i = 1; i < size; ++i) {
             v1 = v2;
-            v2 = vertices.get(i).subtract(p);
+            v2 = vertices.get(i).subtract(gp.point);
 
             try {
                 n = v1.crossProduct(v2).normalize();
@@ -163,6 +157,6 @@ public class Polygon implements Geometry {
             }
         }
 
-        return List.of(p);
+        return List.of(gp);
     }
 }

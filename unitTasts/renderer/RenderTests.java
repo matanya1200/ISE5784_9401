@@ -1,16 +1,16 @@
 package renderer;
 
-import geometries.Sphere;
-import geometries.Triangle;
-import lighting.AmbientLight;
+import static java.awt.Color.*;
+
 import org.junit.jupiter.api.Test;
-import primitives.Color;
-import primitives.Double3;
-import primitives.Point;
-import primitives.Vector;
+
+import geometries.*;
+import lighting.AmbientLight;
+import primitives.*;
+import renderer.*;
 import scene.Scene;
 
-import static java.awt.Color.YELLOW;
+
 
 /**
  * Test rendering a basic image
@@ -55,6 +55,38 @@ public class RenderTests {
         camera1.writeToImage();
     }
 
+    // For stage 6 - please disregard in stage 5
+    /**
+     * Produce a scene with basic 3D model - including individual lights of the
+     * bodies and render it into a png image with a grid
+     */
+    @Test
+    public void basicRenderMultiColorTest() {
+        scene.setAmbientLight(new AmbientLight(new Color(0, 0, 0), Double3.ONE))
+                .setBackground(new Color(BLACK));
+        scene.geometries.add( //
+                new Sphere(new Point(0, 0, -100), 50).setEmission(new Color(50,50,50)),
+                // up left
+                new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100))
+                        .setEmission(new Color(GREEN)),
+//                // up left
+//                new Triangle(new Point(100, 0, -100), new Point(0, 100, -100), new Point(100, 100, -100))
+//                        .setEmission(new Color(YELLOW)),
+                // down left
+                new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100))
+                        .setEmission(new Color(RED)),
+                // down right
+                new Triangle(new Point(100, 0, -100), new Point(0, -100, -100), new Point(100, -100, -100))
+                        .setEmission(new Color(BLUE)));
+
+        Camera camera1 =
+                camera.setImageWriter(new ImageWriter("color render test", 1000, 1000))
+                .build();
+                camera1.renderImage();
+                camera1.printGrid(100, new Color(WHITE));
+                camera1.writeToImage();
+    }
+}
 //   /** Test for XML based scene - for bonus */
 //   @Test
 //   public void basicRenderXml() {
@@ -70,5 +102,3 @@ public class RenderTests {
 //         camera2.printGrid(100, new Color(YELLOW));
 //         camera2.writeToImage();
 //   }
-}
-
