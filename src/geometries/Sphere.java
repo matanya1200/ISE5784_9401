@@ -42,6 +42,12 @@ public class Sphere extends RadialGeometry {
         return point.subtract(center).normalize();
     }
 
+    /**
+     * Finds intersections between a ray and the sphere.
+     *
+     * @param ray the ray to intersect with the sphere
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();

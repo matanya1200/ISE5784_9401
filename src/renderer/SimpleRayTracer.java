@@ -2,9 +2,8 @@ package renderer;
 
 import geometries.Intersectable.GeoPoint;
 import geometries.Intersectable;
-import primitives.Color;
-import primitives.Point;
-import primitives.Ray;
+import lighting.LightSource;
+import primitives.*;
 import scene.Scene;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class SimpleRayTracer extends RayTracerBase {
      *
      * @param scene the scene to be used for ray tracing
      */
-    SimpleRayTracer(Scene scene) {
+    public SimpleRayTracer(Scene scene) {
         super(scene);
     }
 
@@ -34,26 +33,81 @@ public class SimpleRayTracer extends RayTracerBase {
      */
     @Override
     public Color traceRay(Ray ray) {
-        List<GeoPoint> intersections = this.scene.geometries.findGeoIntersections(ray);
-
-        if (intersections == null) {
+        GeoPoint closestGeoPoint = ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
+        if (closestGeoPoint == null) {
             return scene.background;
         }
-
-        GeoPoint closestPoint = ray.findClosestGeoPoint(intersections);
-
-        return calcColor(closestPoint);
+        return calcColor(closestGeoPoint, ray);
     }
 
     /**
-     * Calculates the color at a given point.
-     * In this basic implementation, it returns the intensity of the ambient light in the scene.
+     * Calculates the color at a given GeoPoint.
      *
-     * @param point the point for which the color is to be calculated
-     * @return the color at the given point
+     * @param geoPoint the GeoPoint
+     * @param ray the ray
+     * @return the color at the GeoPoint
      */
-    private Color calcColor(GeoPoint geoPoint) {
-        return scene.ambientLight.getIntensity().add(geoPoint.geometry.getEmission());
+    private Color calcColor(GeoPoint geoPoint, Ray ray) {
+        Color color = geoPoint.geometry.getEmission()
+                .add(scene.ambientLight.getIntensity());
+        color = color.add(calcLocalEffects(geoPoint, ray));
+        return color;
+    }
+
+    /**
+     * Calculates the local effects of lighting on a given GeoPoint.
+     *
+     * @param geoPoint the GeoPoint
+     * @param ray the ray
+     * @return the color resulting from local lighting effects
+     */
+    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray) {
+        Vector v = ray.getDir().normalize();
+        Vector n = geoPoint.geometry.getNormal(geoPoint.point).normalize();
+        Material material = geoPoint.geometry.getMaterial();
+        Color color = Color.BLACK;
+
+        for (LightSource lightSource : scene.getLights()) {
+            Vector l = lightSource.getL(geoPoint.point).normalize();
+            if (n.dotProduct(l) * n.dotProduct(v) > 0) { // sign of dotProduct is positive when both are above or below surface
+                Color lightIntensity = lightSource.getIntensity(geoPoint.point);
+                color = color.add(calcDiffusive(material.kD, l, n, lightIntensity),
+                        calcSpecular(material.kS, l, n, v, material.nShininess, lightIntensity));
+            }
+        }
+
+        return color;
+    }
+
+    /**
+     * Calculates the diffuse component of lighting.
+     *
+     * @param kD the diffuse coefficient
+     * @param l the light direction
+     * @param n the normal vector
+     * @param lightIntensity the intensity of the light
+     * @return the diffuse color
+     */
+    private Color calcDiffusive(Double3 kD, Vector l, Vector n, Color lightIntensity) {
+        double ln = Math.abs(l.dotProduct(n));
+        return lightIntensity.scale(kD).scale(ln);
+    }
+
+    /**
+     * Calculates the specular component of lighting.
+     *
+     * @param kS the specular coefficient
+     * @param l the light direction
+     * @param n the normal vector
+     * @param v the view direction
+     * @param shininess the shininess coefficient
+     * @param lightIntensity the intensity of the light
+     * @return the specular color
+     */
+    private Color calcSpecular(Double3 kS, Vector l, Vector n, Vector v, double shininess, Color lightIntensity) {
+        Vector r = l.subtract(n.scale(2 * l.dotProduct(n))); // reflection direction
+        double vr = Math.max(0, -v.dotProduct(r));
+        return lightIntensity.scale(kS).scale(Math.pow(vr, shininess));
     }
 
 }

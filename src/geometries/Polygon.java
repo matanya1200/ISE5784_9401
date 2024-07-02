@@ -100,7 +100,12 @@ public class Polygon extends Geometry {
         return plane.getNormal();
     }
 
-
+    /**
+     * Finds intersections between a ray and the polygon.
+     *
+     * @param ray the ray to intersect with the polygon
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         // Find intersection with the plane

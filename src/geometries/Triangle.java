@@ -26,6 +26,12 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
 
+    /**
+     * Finds intersections between a ray and the triangle.
+     *
+     * @param ray the ray to intersect with the triangle
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         // First, find the intersection with the plane of the triangle

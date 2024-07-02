@@ -91,7 +91,12 @@ public class Ray {
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
 
-
+    /**
+     * Finds the closest geometric point to the ray's starting point from a list of geometric points.
+     *
+     * @param geoPoints the list of geometric points to search through
+     * @return the closest geometric point to the ray's starting point, or null if the list is empty
+     */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints){
         if (geoPoints == null || geoPoints.isEmpty()) {
             return null;

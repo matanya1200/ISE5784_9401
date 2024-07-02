@@ -61,6 +61,12 @@ public class Tube extends RadialGeometry {
         return normal.normalize();
     }
 
+    /**
+     * Finds intersections between a ray and the tube.
+     *
+     * @param ray the ray to intersect with the tube
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         return null;

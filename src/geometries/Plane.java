@@ -81,6 +81,12 @@ public class Plane extends Geometry {
         return normal;
     }
 
+    /**
+     * Finds intersections between a ray and the plane.
+     *
+     * @param ray the ray to intersect with the plane
+     * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
+     */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
