@@ -14,7 +14,7 @@ public class SpotLight extends PointLight {
     /**
      * the narrow beam value.
      */
-    private double narrowBeam = 1;
+    private double narrowBeam = 1d;
 
     /**
      * Constructs a SpotLight with a specified intensity, position, and direction.
@@ -75,7 +75,11 @@ public class SpotLight extends PointLight {
         //Il = i0*max(0,dir*l)/kc+kl*d+kq*d^2
         Color pointLightIntensity = super.getIntensity(p);
         double projection = direction.dotProduct(getL(p));
-        return (projection <= 0) ? Color.BLACK : pointLightIntensity.scale(projection);
+        double factor = Math.max(0, projection);
+        if (narrowBeam != 1) {
+            factor = Math.pow(factor, narrowBeam);
+        }
+        return (factor == 0) ? Color.BLACK : pointLightIntensity.scale(factor);
     }
 
     /**
@@ -89,8 +93,8 @@ public class SpotLight extends PointLight {
         return super.getL(p);
     }
 
-    public LightSource setNarrowBeam(double nerrowBeam) {
-        this.narrowBeam = nerrowBeam;
+    public LightSource setNarrowBeam(double n) {
+        this.narrowBeam = n;
         return this;
     }
 }
