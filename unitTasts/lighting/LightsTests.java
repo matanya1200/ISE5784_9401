@@ -196,11 +196,14 @@ public class LightsTests {
 
    @Test
    public void multipleLightSourcesSphere() {
-      scene1.geometries.add(sphere);
-      scene1.lights.add(new PointLight(sphereLightColor, sphereLightPosition).setKl(0.0001).setKq(0.00002));
-      scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, sphereLightDirection)
-              .setKl(0.0001).setKq(0.00001));
-      scene1.lights.add(new DirectionalLight(sphereLightColor, sphereLightDirection.scale(-1)));
+      scene1.geometries.add(new Sphere(sphereCenter, SPHERE_RADIUS)
+              .setEmission(new Color(GREEN).reduce(2)).setMaterial(new Material().setKd(KD).setKs(KS).setShininess(SHININESS)));
+
+      scene1.lights.add(new SpotLight(new Color(720, 55, 20), new Point(60, 60, 100), new Vector(-1,-1,-2))
+              .setKl(0.001).setKq(0.00005));
+      scene1.lights.add(new PointLight(new Color(452, 325, 70), new Point(-50, -50, -50))
+              .setKl(0.0005).setKq(0.0005));
+      scene1.lights.add(new DirectionalLight(new Color(121, 250, 324), new Vector(0, 0, -1)));
 
       camera1.setImageWriter(new ImageWriter("multipleLightSourcesSphere", 500, 500))
               .build()

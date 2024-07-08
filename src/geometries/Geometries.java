@@ -1,7 +1,6 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Ray;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,7 +11,7 @@ import java.util.List;
  * It is used to group multiple geometries together and perform operations on them as a whole.
  */
 public class Geometries extends Intersectable {
-    private final List<Intersectable> geometries = new LinkedList<Intersectable>();
+    private final List<Intersectable> geometries = new LinkedList<>();
 
     /**
      * Default constructor for Geometries.

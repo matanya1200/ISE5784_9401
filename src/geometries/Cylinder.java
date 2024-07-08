@@ -5,7 +5,7 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
-import java.util.List;
+//import java.util.List;
 
 /**
  * The Cylinder class represents a cylinder in 3D space.
@@ -16,7 +16,7 @@ public class Cylinder extends Tube {
     /**
      * The height of the cylinder.
      */
-    private double height;
+    private final double height;
 
     /**
      * Constructs a Cylinder with a specified radius, axis ray, and height.
