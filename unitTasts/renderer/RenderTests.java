@@ -70,7 +70,7 @@ public class RenderTests {
                 new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100))
                         .setEmission(new Color(GREEN)),
 //                // up left
-//                new Triangle(new Point(100, 0, -100), new Point(0, 100, -100), new Point(100, 100, -100))
+//                new Polygon(new Point(100, 0, -100), new Point(0, 100, -100), new Point(100, 100, -100))
 //                        .setEmission(new Color(YELLOW)),
                 // down left
                 new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100))
@@ -80,7 +80,7 @@ public class RenderTests {
                         .setEmission(new Color(BLUE)));
 
         Camera camera1 =
-                camera.setImageWriter(new ImageWriter("color render test", 1000, 1000))
+                camera.setImageWriter(new ImageWriter("color render test1", 1000, 1000))
                 .build();
                 camera1.renderImage();
                 camera1.printGrid(100, new Color(WHITE));

@@ -11,6 +11,7 @@ import static primitives.Util.isZero;
  */
 public class Ray {
 
+    private static final double DELTA = 0.1;
     /**
      * The origin point of the ray.
      */
@@ -30,6 +31,21 @@ public class Ray {
      */
     public Ray(Point head, Vector direction) {
         this.head = head;
+        this.direction = direction.normalize();
+    }
+
+    /**
+     * Constructs a Ray with a specified point, direction vector, and normal vector.
+     * The direction vector is normalized and the origin is adjusted by DELTA in the direction of the normal.
+     *
+     * @param point     the point of origin
+     * @param direction the direction vector
+     * @param normal    the normal vector
+     */
+    public Ray(Point point, Vector direction, Vector normal) {
+        double nv = normal.dotProduct(direction);
+        Vector delta = normal.scale(nv > 0 ? DELTA : -DELTA);
+        this.head = point.add(delta);
         this.direction = direction.normalize();
     }
 

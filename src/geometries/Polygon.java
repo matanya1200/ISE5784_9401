@@ -108,60 +108,33 @@ public class Polygon extends Geometry {
      */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        // Find intersection with the plane
-        List<GeoPoint> planeIntersections = plane.findGeoIntersectionsHelper(ray);
-        if (planeIntersections == null) {
+        //all the intersection between ray and plane
+        List<GeoPoint> intersections = plane.findGeoIntersections(ray);
+        if (intersections == null || intersections.isEmpty())
             return null;
-        }
 
-        GeoPoint gp = planeIntersections.get(0);
+        Point p0 = ray.getP0(); //the start ray point
+        Vector v = ray.getDir();//rays direction
 
-        // Check if the intersection point is exactly at one of the vertices
-        for (Point vertex : vertices) {
-            if (gp.point.equals(vertex)) {
-                return null;
-            }
-        }
-
-        // Check if the intersection point is inside the polygon
-        Vector v = ray.getDir();
-        Point p0 = ray.getP0();
-
-        Vector v1 = vertices.get(size - 1).subtract(gp.point);
-        Vector v2 = vertices.get(0).subtract(gp.point);
-
-        Vector n;
-        try {
-            n = v1.crossProduct(v2).normalize();
-        } catch (IllegalArgumentException e) {
-            return null; // אם v1 או v2 הם וקטור אפס, אין חיתוך
-        }
-
-        double sign = alignZero(v.dotProduct(n));
-        if (isZero(sign)) {
+        Vector v1 = vertices.get(1).subtract(p0); //vector from the ray start point to the polygon vertices
+        Vector v2 = vertices.get(0).subtract(p0); //vector from the ray start point to the polygon vertices
+        double sign = v.dotProduct(v1.crossProduct(v2));
+        if (isZero(sign))//out of the polygon
             return null;
-        }
+
         boolean positive = sign > 0;
 
-        for (int i = 1; i < size; ++i) {
+        for (int i = vertices.size() - 1; i > 0; --i) { //foreach vertices
             v1 = v2;
-            v2 = vertices.get(i).subtract(gp.point);
-
-            try {
-                n = v1.crossProduct(v2).normalize();
-            } catch (IllegalArgumentException e) {
-                return null; // אם v1 או v2 הם וקטור אפס, אין חיתוך
-            }
-
-            sign = alignZero(v.dotProduct(n));
-            if (isZero(sign)) {
-                return null;
-            }
-            if (positive != (sign > 0)) {
-                return null;
-            }
+            v2 = vertices.get(i).subtract(p0);//vector from the ray start point to the polygon vertices
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) return null; //out of the polygon
+            if (positive != (sign > 0)) return null;//out of the polygon
         }
 
-        return List.of(gp);
+        intersections.get(0).geometry = this;
+
+        return intersections;
     }
+
 }

@@ -3,6 +3,7 @@ package geometries;
 import primitives.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,9 +36,7 @@ public class Geometries extends Intersectable {
      * @param geometries the geometries to add
      */
     public void add(Intersectable... geometries) {
-        for (Intersectable geometry : geometries) {
-            this.geometries.add(geometry);
-        }
+        Collections.addAll(this.geometries, geometries);
     }
 
     /**
@@ -48,17 +47,17 @@ public class Geometries extends Intersectable {
      */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> Geointersections = null;
+        List<GeoPoint> Intersections = null;
 
         for (Intersectable geometry : geometries) {
             List<GeoPoint> tempGeoIntersections = geometry.findGeoIntersectionsHelper(ray);
             if (tempGeoIntersections != null) {
-                if (Geointersections == null) {
-                    Geointersections = new ArrayList<>();
+                if (Intersections == null) {
+                    Intersections = new ArrayList<>();
                 }
-                Geointersections.addAll(tempGeoIntersections);
+                Intersections.addAll(tempGeoIntersections);
             }
         }
-        return Geointersections;
+        return Intersections;
     }
 }

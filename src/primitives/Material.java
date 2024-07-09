@@ -16,6 +16,8 @@ public class Material {
     /**
      * Shininess factor of the material.
      */
+    public Double3 kT = Double3.ZERO;
+    public Double3 kR = Double3.ZERO;
     public int nShininess = 0;
 
     /**
@@ -70,6 +72,50 @@ public class Material {
      */
     public Material setShininess(int shine){
         nShininess = shine;
+        return this;
+    }
+
+    /**
+     * Sets the specular coefficient of the material.
+     *
+     * @param kt the specular coefficient to set
+     * @return this Material object for method chaining
+     */
+    public Material setKt(Double3 kt){
+        this.kT = kt;
+        return this;
+    }
+
+    /**
+     * Sets the specular coefficient of the material using a scalar value.
+     *
+     * @param kt the scalar value of the specular coefficient to set
+     * @return this Material object for method chaining
+     */
+    public Material setKt(double kt){
+        this.kT = new Double3(kt);
+        return this;
+    }
+
+    /**
+     * Sets the specular coefficient of the material.
+     *
+     * @param kr the specular coefficient to set
+     * @return this Material object for method chaining
+     */
+    public Material setKr(Double3 kr){
+        this.kR = kr;
+        return this;
+    }
+
+    /**
+     * Sets the specular coefficient of the material using a scalar value.
+     *
+     * @param kr the scalar value of the specular coefficient to set
+     * @return this Material object for method chaining
+     */
+    public Material setKr(double kr){
+        this.kR = new Double3(kr);
         return this;
     }
 }
