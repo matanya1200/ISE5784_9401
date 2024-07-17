@@ -14,8 +14,8 @@ public class minip1_v3 {
     private final Scene scene = new Scene("Test scene");
 
     /** Camera builder for the tests with multiple shapes */
-    private final Camera.Builder cameraBuilder = Camera.getBuilder().setLocation(new Point(-20,60,100))
-            .setDirection(new Vector(0, 0, -1), new Vector(0, 1, 0))
+    private final Camera.Builder cameraBuilder = Camera.getBuilder().setLocation(new Point(0,30,100))
+            .setDirection(new Vector(0.2, 0, -1.2), new Vector(0, 1, 0))
             .setRayTracer(new SimpleRayTracer(scene));
 
     @Test
