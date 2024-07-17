@@ -49,7 +49,7 @@ public class MultipleShapes {
         cameraBuilder
                 .setVpSize(150, 150)
                 .setVpDistance(100)
-                .setImageWriter(new ImageWriter("4Shapes", 500, 500))
+                .setImageWriter(new ImageWriter("MultipleShapes", 500, 500))
                 .build()
                 .renderImage()
                 .writeToImage();

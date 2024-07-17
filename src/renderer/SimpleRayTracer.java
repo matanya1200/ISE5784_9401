@@ -6,6 +6,7 @@ import primitives.*;
 import scene.Scene;
 
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Math.*;
 import static primitives.Util.alignZero;
@@ -18,6 +19,7 @@ public class SimpleRayTracer extends RayTracerBase {
     private static final Double3 INITIAL_K = Double3.ONE;
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
+    private static final int NUM_SAMPLES = 4;
 
     /**
      * Constructs a SimpleRayTracer with the given scene.
@@ -221,6 +223,28 @@ public class SimpleRayTracer extends RayTracerBase {
         Vector reflectVector = l.subtract(n.scale(nl * 2));
         double minusVR = -alignZero(v.dotProduct(reflectVector));
         return minusVR <= 0 ? Double3.ZERO : material.kS.scale(pow(minusVR, material.nShininess));
+    }
+
+    /**
+     * Calculates the color of a pixel using anti-aliasing by shooting multiple rays per pixel and averaging the colors.
+     *
+     * @param centerRay the center ray of the pixel
+     * @return the averaged color of the pixel
+     */
+    public Color calcColorWithAntiAliasing(Ray centerRay) {
+        Color finalColor = Color.BLACK;
+        Random rand = new Random();
+        for (int i = 0; i < NUM_SAMPLES; i++) {
+            // Generate random offset for the ray
+            double offsetX = rand.nextDouble() - 0.5;
+            double offsetY = rand.nextDouble() - 0.5;
+            // Create a new ray with the offset
+            Ray offsetRay = centerRay.createWithOffset(offsetX, offsetY);
+            // Trace the offset ray and add the color to the final color
+            finalColor = finalColor.add(traceRay(offsetRay));
+        }
+        // Average the color by the number of samples
+        return finalColor.reduce(NUM_SAMPLES);
     }
 }
 

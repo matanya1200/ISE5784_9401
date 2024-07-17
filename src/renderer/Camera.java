@@ -6,6 +6,7 @@ import primitives.Ray;
 import primitives.Vector;
 
 import java.util.MissingResourceException;
+import java.util.Random;
 
 import static primitives.Util.isZero;
 
@@ -226,6 +227,39 @@ public class Camera implements Cloneable {
 
         return this;
     }
+
+    public Camera renderImageWithAntiAliasing(int numSamples) {
+        if (imageWriter == null || rayTracer == null) {
+            throw new MissingResourceException("Missing resources for rendering", "", "");
+        }
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        Random rand = new Random();
+        int sqrtSamples = (int) Math.sqrt(numSamples);
+
+        for (int i = 0; i < nY; ++i) {
+            for (int j = 0; j < nX; ++j) {
+                Color finalColor = Color.BLACK;
+                Ray centerRay = constructRay(nX, nY, j, i);
+
+                // Loop over grid cells within the pixel
+                for (int p = 0; p < sqrtSamples; ++p) {
+                    for (int q = 0; q < sqrtSamples; ++q) {
+                        // Jittering within the grid cell
+                        double offsetX = (p + rand.nextDouble()) / sqrtSamples - 0.5;
+                        double offsetY = (q + rand.nextDouble()) / sqrtSamples - 0.5;
+                        Ray offsetRay = centerRay.createWithOffset(offsetX, offsetY);
+                        finalColor = finalColor.add(rayTracer.traceRay(offsetRay));
+                    }
+                }
+                finalColor = finalColor.reduce(numSamples);
+                imageWriter.writePixel(j, i, finalColor);
+            }
+        }
+        return this;
+    }
+
 
     /**
      * The Builder class provides a fluent interface for building a Camera object.

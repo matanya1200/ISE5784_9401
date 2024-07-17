@@ -147,6 +147,11 @@ public class Color {
         return new Color(rgb.reduce(k));
     }
 
+    /**
+     * Returns a string representation of the Color.
+     *
+     * @return A string representation of the Color.
+     */
     @Override
     public String toString() {
         return "rgb:" + rgb;

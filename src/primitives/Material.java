@@ -9,15 +9,25 @@ public class Material {
      * Diffuse coefficient of the material.
      */
     public Double3 kD = Double3.ZERO;
+
     /**
      * Specular coefficient of the material.
      */
     public Double3 kS = Double3.ZERO;
+
+    /**
+     * Transparency coefficient of the material.
+     */
+    public Double3 kT = Double3.ZERO;
+
+    /**
+     * Reflection coefficient of the material.
+     */
+    public Double3 kR = Double3.ZERO;
+
     /**
      * Shininess factor of the material.
      */
-    public Double3 kT = Double3.ZERO;
-    public Double3 kR = Double3.ZERO;
     public int nShininess = 0;
 
     /**

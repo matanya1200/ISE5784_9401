@@ -69,9 +69,9 @@ public class RenderTests {
                 // up left
                 new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100))
                         .setEmission(new Color(GREEN)),
-//                // up left
-//                new Polygon(new Point(100, 0, -100), new Point(0, 100, -100), new Point(100, 100, -100))
-//                        .setEmission(new Color(YELLOW)),
+                // up left
+                new Triangle(new Point(100, 0, -100), new Point(0, 100, -100), new Point(100, 100, -100))
+                        .setEmission(new Color(YELLOW)),
                 // down left
                 new Triangle(new Point(-100, 0, -100), new Point(0, -100, -100), new Point(-100, -100, -100))
                         .setEmission(new Color(RED)),

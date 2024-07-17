@@ -50,6 +50,19 @@ public class Ray {
     }
 
     /**
+     * Creates a new Ray with an offset from the current ray.
+     *
+     * @param offsetX the offset in the x direction
+     * @param offsetY the offset in the y direction
+     * @return a new Ray with the specified offsets
+     */
+    public Ray createWithOffset(double offsetX, double offsetY) {
+        // Calculate the offset point
+        Point newHead = new Point(head.xyz.d1 + offsetX, head.xyz.d2 + offsetY, head.xyz.d3);
+        return new Ray(newHead, direction);
+    }
+
+    /**
      * Checks if this ray is equal to another object.
      *
      * @param obj the object to compare
