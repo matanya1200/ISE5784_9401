@@ -12,8 +12,8 @@
 יצירת העניים והפה:
 
 ![image](https://github.com/user-attachments/assets/1cd35df5-f504-4db9-b684-6a832b6dc280)
-י
-צירת הזרועות:
+
+יצירת הזרועות:
 
 ![image](https://github.com/user-attachments/assets/a633da30-941d-4cbf-9ee2-f5f76048ef1e)
 
@@ -52,10 +52,17 @@ ANTI ALIASING:
 
 ללא שיפור:
 
-![image](https://github.com/user-attachments/assets/4468991b-150d-4f28-843a-9ad55cf6bcdc)
+![image](https://github.com/user-attachments/assets/0d16e16f-2426-4af7-b51d-2159a3ff4175)
+
 
 עם שיפור:
 
-![Uploading image.png…]()
+
+![image](https://github.com/user-attachments/assets/9cdc8a63-caaa-415b-a9fa-df03c099c6d1)
+
+
+
 כך נראת התמונה הסופית לאחר השיפור:
+
+
 ![image](https://github.com/user-attachments/assets/6dbb0b15-71ab-47f9-900d-f004a28c1355)
