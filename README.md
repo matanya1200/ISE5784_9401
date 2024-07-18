@@ -1,5 +1,7 @@
 דוח פרויקט
+
 מתניה נבט 318379404
+
 בנג'מין דווילה
 
 פרטי התמונה:
@@ -70,6 +72,17 @@ ANTI ALIASING:
 
 
 ![image](https://github.com/user-attachments/assets/6dbb0b15-71ab-47f9-900d-f004a28c1355)
+
+
+הקוד של MT בשימוש עם AA
+
+
+![image](https://github.com/user-attachments/assets/c78c2d88-c9af-463b-9a44-52bf053293f1)
+![image](https://github.com/user-attachments/assets/be72d0b9-2249-44cd-9b48-e79ba9c1f5d7)
+![image](https://github.com/user-attachments/assets/57e0c2f8-7347-4ad6-ab59-0aad23dabe52)
+
+
+
 
 
 זמן הרצה שימוש AA וללא שימוש בMT:
