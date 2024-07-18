@@ -2,6 +2,7 @@
 
 פרטי התמונה:
 התמונה הזו מוצלמת מהנקדודה
+
 ![image](https://github.com/user-attachments/assets/b38d1641-d3b9-4dcf-9457-9e3342f913c7)
 יצירת גוף איש השלג:
 ![image](https://github.com/user-attachments/assets/2346de9f-a2de-4a7e-89e4-f60be93b4645)
