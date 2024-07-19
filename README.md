@@ -1,0 +1,97 @@
+דוח פרויקט
+
+מתניה נבט 318379404
+
+בנג'מין דווילה
+
+פרטי התמונה:
+התמונה הזו מוצלמת מהנקדודה
+
+![image](https://github.com/user-attachments/assets/b38d1641-d3b9-4dcf-9457-9e3342f913c7)
+
+יצירת גוף איש השלג:
+
+![image](https://github.com/user-attachments/assets/2346de9f-a2de-4a7e-89e4-f60be93b4645)
+
+יצירת העניים והפה:
+
+![image](https://github.com/user-attachments/assets/1cd35df5-f504-4db9-b684-6a832b6dc280)
+
+יצירת הזרועות:
+
+![image](https://github.com/user-attachments/assets/a633da30-941d-4cbf-9ee2-f5f76048ef1e)
+
+הוספת הכפתורים:
+
+![image](https://github.com/user-attachments/assets/f4617856-641f-4c8b-9dbb-7deeab517f77)
+
+הספת פתיתי שלג ועננים:
+
+![image](https://github.com/user-attachments/assets/d3179b05-f792-4a89-9c80-4c9887739e4b)
+
+הוספת מקורות התאורה:
+
+![image](https://github.com/user-attachments/assets/12ead4ae-752b-416f-b5ee-b69ff4690636)
+
+כך נראת התמונה הסופית:
+
+![image](https://github.com/user-attachments/assets/8b42efba-c1f8-4163-ab6b-f91d49f66546)
+
+ע"י הזזת המצלמה לנקדה הזו עם ווקטורי הכיוון האלו:
+
+
+![image](https://github.com/user-attachments/assets/ec6ee453-c837-4178-9336-f123cf5476bd)
+
+נקבל את התמונה הזו
+
+![image](https://github.com/user-attachments/assets/d24c7406-612b-40ce-8967-80ee5ca3c907)
+
+
+
+שיפור התמונה 
+ANTI ALIASING:
+
+תיאור הבעיה: המעבר בין צבע לצבע נעשה באופן ישיר מה שיוצר לתמונה קצוות חדים
+
+פיתרון הבעיה: ניצור פיקסלי משנה שנמצאים בין שני פיקסלים ובכל פיקסל במקום לשלוח קרן יחידה נשלח הרבה קרנים שיחסו את כל הפקסל משנה 
+לאחר מכן נעשה ממוצע על כל בצבעים שקבלנו מהקרנים ואם הצבע "רחוק" מהבסע המקורי של הפיקסל נצבע אותה הפקסל בצבע של ממצע הקרניים
+
+ללא שיפור:
+
+![image](https://github.com/user-attachments/assets/0d16e16f-2426-4af7-b51d-2159a3ff4175)
+
+
+עם שיפור:
+
+
+![image](https://github.com/user-attachments/assets/9cdc8a63-caaa-415b-a9fa-df03c099c6d1)
+
+
+
+כך נראת התמונה הסופית לאחר השיפור:
+
+
+![image](https://github.com/user-attachments/assets/6dbb0b15-71ab-47f9-900d-f004a28c1355)
+
+
+הקוד של MT בשימוש עם AA
+
+
+![image](https://github.com/user-attachments/assets/c78c2d88-c9af-463b-9a44-52bf053293f1)
+![image](https://github.com/user-attachments/assets/be72d0b9-2249-44cd-9b48-e79ba9c1f5d7)
+![image](https://github.com/user-attachments/assets/57e0c2f8-7347-4ad6-ab59-0aad23dabe52)
+
+
+
+
+
+זמן הרצה שימוש AA וללא שימוש בMT:
+
+8 דקות ו20 שניות
+
+זמן הרצה שימוש AA וגם בMT:
+
+3 וחצי דקות
+
+שיפוש של 4 דוקות ועשר שניות 
+כלומר כמעט פי 2 וחצי מהר יותר
