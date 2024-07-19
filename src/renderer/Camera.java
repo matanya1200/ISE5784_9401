@@ -310,6 +310,7 @@ public class Camera implements Cloneable {
             }
 
             return this;
+
         }
 
         else {
