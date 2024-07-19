@@ -8,6 +8,10 @@ import primitives.Vector;
 import java.util.MissingResourceException;
 import java.util.Random;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import static primitives.Util.isZero;
 
 /**
@@ -60,6 +64,15 @@ public class Camera implements Cloneable {
      * The RayTracerBase for tracing rays in the scene.
      */
     private RayTracerBase rayTracer;
+
+    private boolean useMultiThreading = false; // Default is false
+
+    // Method to enable Multi-Threading
+    public Camera setMultiThreading(boolean useMultiThreading) {
+        this.useMultiThreading = useMultiThreading;
+        return this;
+    }
+
 
     /**
      * Constructs a new Camera object.
@@ -183,13 +196,35 @@ public class Camera implements Cloneable {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
-                castRay(nX, nY, j, i);
+        if(useMultiThreading) {
+            ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    final int pixelI = i;
+                    final int pixelJ = j;
+                    executor.execute(() -> castRay(nX, nY, pixelJ, pixelI));
+                }
             }
+
+            executor.shutdown();
+            try {
+                executor.awaitTermination(1, TimeUnit.HOURS);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Image rendering interrupted", e);
+            }
+
+            return this;
         }
-        //throw new RuntimeException("UnsupportedOperationException");
-        return this;
+        else{
+            for (int i = 0; i < nY; i++) {
+                for (int j = 0; j < nX; j++) {
+                    castRay(nX, nY, j, i);
+                }
+            }
+            //throw new RuntimeException("UnsupportedOperationException");
+            return this;
+        }
     }
 
     /**
@@ -238,26 +273,67 @@ public class Camera implements Cloneable {
         Random rand = new Random();
         int sqrtSamples = (int) Math.sqrt(numSamples);
 
-        for (int i = 0; i < nY; ++i) {
-            for (int j = 0; j < nX; ++j) {
-                Color finalColor = Color.BLACK;
-                Ray centerRay = constructRay(nX, nY, j, i);
+        if(useMultiThreading){
+            ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-                // Loop over grid cells within the pixel
-                for (int p = 0; p < sqrtSamples; ++p) {
-                    for (int q = 0; q < sqrtSamples; ++q) {
-                        // Jittering within the grid cell
-                        double offsetX = (p + rand.nextDouble()) / sqrtSamples - 0.5;
-                        double offsetY = (q + rand.nextDouble()) / sqrtSamples - 0.5;
-                        Ray offsetRay = centerRay.createWithOffset(offsetX, offsetY);
-                        finalColor = finalColor.add(rayTracer.traceRay(offsetRay));
-                    }
+            for (int i = 0; i < nY; ++i) {
+                for (int j = 0; j < nX; ++j) {
+                    final int pixelI = i;
+                    final int pixelJ = j;
+                    executor.execute(() -> {
+                        Color finalColor = Color.BLACK;
+                        Ray centerRay = constructRay(nX, nY, pixelJ, pixelI);
+
+                        // Loop over grid cells within the pixel
+                        for (int p = 0; p < sqrtSamples; ++p) {
+                            for (int q = 0; q < sqrtSamples; ++q) {
+                                // Jittering within the grid cell
+                                double offsetX = (p + rand.nextDouble()) / sqrtSamples - 0.5;
+                                double offsetY = (q + rand.nextDouble()) / sqrtSamples - 0.5;
+                                Ray offsetRay = centerRay.createWithOffset(offsetX, offsetY);
+                                finalColor = finalColor.add(rayTracer.traceRay(offsetRay));
+                            }
+                        }
+                        finalColor = finalColor.reduce(numSamples);
+                        synchronized (imageWriter) {
+                            imageWriter.writePixel(pixelJ, pixelI, finalColor);
+                        }
+                    });
                 }
-                finalColor = finalColor.reduce(numSamples);
-                imageWriter.writePixel(j, i, finalColor);
             }
+
+            executor.shutdown();
+            try {
+                executor.awaitTermination(1, TimeUnit.HOURS);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Image rendering interrupted", e);
+            }
+
+            return this;
         }
-        return this;
+
+        else {
+            for (int i = 0; i < nY; ++i) {
+                for (int j = 0; j < nX; ++j) {
+                    Color finalColor = Color.BLACK;
+                    Ray centerRay = constructRay(nX, nY, j, i);
+
+                    // Loop over grid cells within the pixel
+                    for (int p = 0; p < sqrtSamples; ++p) {
+                        for (int q = 0; q < sqrtSamples; ++q) {
+                            // Jittering within the grid cell
+                            double offsetX = (p + rand.nextDouble()) / sqrtSamples - 0.5;
+                            double offsetY = (q + rand.nextDouble()) / sqrtSamples - 0.5;
+                            Ray offsetRay = centerRay.createWithOffset(offsetX, offsetY);
+                            finalColor = finalColor.add(rayTracer.traceRay(offsetRay));
+                        }
+                    }
+                    finalColor = finalColor.reduce(numSamples);
+                    imageWriter.writePixel(j, i, finalColor);
+                }
+            }
+            return this;
+        }
     }
 
 

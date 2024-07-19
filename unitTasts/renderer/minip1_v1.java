@@ -100,14 +100,7 @@ public class minip1_v1 {
                 // Left arm
                 new Triangle(
                         new Point(-45, -23, -145), // Bottom-left
-                        new Point(-45, -17, -145), // Top-left
-                        new Point(-18, -17, -145)  // Top-right
-                )
-                        .setEmission(new Color(139, 69, 19)) // Brown color
-                        .setMaterial(new Material().setKd(new Double3(0.5)).setKs(new Double3(0.5)).setShininess(30)),
-                new Triangle(
-                        new Point(-45, -23, -145), // Bottom-left
-                        new Point(-18, -17, -145), // Top-right
+                        new Point(-18, -20, -145), // Top-right
                         new Point(-18, -23, -145)  // Bottom-right
                 )
                         .setEmission(new Color(139, 69, 19)) // Brown color
@@ -116,14 +109,7 @@ public class minip1_v1 {
                 // Right arm
                 new Triangle(
                         new Point(45, -23, -145), // Bottom-right
-                        new Point(45, -17, -145), // Top-right
-                        new Point(18, -17, -145)  // Top-left
-                )
-                        .setEmission(new Color(139, 69, 19)) // Brown color
-                        .setMaterial(new Material().setKd(new Double3(0.5)).setKs(new Double3(0.5)).setShininess(30)),
-                new Triangle(
-                        new Point(45, -23, -145), // Bottom-right
-                        new Point(18, -17, -145), // Top-left
+                        new Point(18, -20, -145), // Top-left
                         new Point(18, -23, -145)  // Bottom-left
                 )
                         .setEmission(new Color(139, 69, 19)) // Brown color
@@ -204,6 +190,7 @@ public class minip1_v1 {
                 .setVpDistance(100)
                 .setImageWriter(new ImageWriter("minip1_v1 with AA", 800, 600))
                 .build()
+                .setMultiThreading(true)
                 .renderImageWithAntiAliasing(80)
                 .writeToImage();
     }
