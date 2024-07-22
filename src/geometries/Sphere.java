@@ -85,6 +85,17 @@ public class Sphere extends RadialGeometry {
         }
 
         return intersections.isEmpty() ? null : intersections; // Return null if no valid intersections
+    }
 
+    /**
+     * Returns the bounding box of the sphere.
+     *
+     * @return the bounding box of the sphere
+     */
+    @Override
+    public AABB getBoundingBox() {
+        Point min = center.subtract(new Vector(radius, radius, radius));
+        Point max = center.add(new Vector(radius, radius, radius));
+        return new AABB(min, max);
     }
 }

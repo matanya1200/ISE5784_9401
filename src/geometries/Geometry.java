@@ -68,4 +68,11 @@ public abstract class Geometry extends Intersectable {
      */
     public abstract Vector getNormal(Point point);
 
+    /**
+     * Gets the axis-aligned bounding box (AABB) that encompasses this geometrical object.
+     *
+     * @return the bounding box of this geometrical object
+     */
+    @Override
+    public abstract AABB getBoundingBox();
 }

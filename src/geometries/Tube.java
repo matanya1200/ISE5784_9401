@@ -71,4 +71,14 @@ public class Tube extends RadialGeometry {
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         return null;
     }
+
+    /**
+     * Returns the bounding box of the tube.
+     *
+     * @return the bounding box of the tube
+     */
+    @Override
+    public AABB getBoundingBox() {
+        return new AABB(new Point(0, 0, 0), new Point(1, 1, 1)); // קופסה פשוטה כדוגמה
+    }
 }

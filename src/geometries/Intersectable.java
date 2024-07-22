@@ -76,4 +76,12 @@ public abstract class Intersectable {
      * @return a list of GeoPoint objects representing the intersections, or null if no intersections are found
      */
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+
+    /**
+     * Gets the axis-aligned bounding box (AABB) that encompasses this geometrical object.
+     *
+     * @return the bounding box of this geometrical object
+     */
+    public abstract AABB getBoundingBox();
+
 }

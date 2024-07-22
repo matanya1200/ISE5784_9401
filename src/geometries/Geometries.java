@@ -14,6 +14,8 @@ import java.util.List;
 public class Geometries extends Intersectable {
     private final List<Intersectable> geometries = new LinkedList<>();
 
+    private AABB boundingBox;
+
     /**
      * Default constructor for Geometries.
      * Creates an empty list of geometries.
@@ -37,6 +39,7 @@ public class Geometries extends Intersectable {
      */
     public void add(Intersectable... geometries) {
         Collections.addAll(this.geometries, geometries);
+        updateBoundingBox();
     }
 
     /**
@@ -59,5 +62,46 @@ public class Geometries extends Intersectable {
             }
         }
         return Intersections;
+    }
+
+    /**
+     * Gets the axis-aligned bounding box (AABB) that encompasses this collection of geometries.
+     *
+     * @return the bounding box of this collection of geometries
+     */
+    @Override
+    public AABB getBoundingBox() {
+        return boundingBox;
+    }
+
+    /**
+     * Updates the bounding box to encompass all the geometries in the list.
+     */
+    private void updateBoundingBox() {
+        if (geometries.isEmpty()) {
+            boundingBox = null;
+            return;
+        }
+
+        Point min = new Point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        Point max = new Point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY);
+
+        for (Intersectable geometry : geometries) {
+            AABB geoBBox = geometry.getBoundingBox();
+            if (geoBBox != null) {
+                min = new Point(
+                        Math.min(min.getX(), geoBBox.getMin().getX()),
+                        Math.min(min.getY(), geoBBox.getMin().getY()),
+                        Math.min(min.getZ(), geoBBox.getMin().getZ())
+                );
+                max = new Point(
+                        Math.max(max.getX(), geoBBox.getMax().getX()),
+                        Math.max(max.getY(), geoBBox.getMax().getY()),
+                        Math.max(max.getZ(), geoBBox.getMax().getZ())
+                );
+            }
+        }
+
+        boundingBox = new AABB(min, max);
     }
 }

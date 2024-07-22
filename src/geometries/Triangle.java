@@ -69,4 +69,22 @@ public class Triangle extends Polygon {
 
         return null;
     }
+
+    /**
+     * Returns the bounding box of the triangle.
+     *
+     * @return the bounding box of the triangle
+     */
+    @Override
+    public AABB getBoundingBox() {
+        double minX = Math.min(Math.min(vertices.get(0).getX(), vertices.get(1).getX()), vertices.get(2).getX());
+        double minY = Math.min(Math.min(vertices.get(0).getY(), vertices.get(1).getY()), vertices.get(2).getY());
+        double minZ = Math.min(Math.min(vertices.get(0).getZ(), vertices.get(1).getZ()), vertices.get(2).getZ());
+
+        double maxX = Math.max(Math.max(vertices.get(0).getX(), vertices.get(1).getX()), vertices.get(2).getX());
+        double maxY = Math.max(Math.max(vertices.get(0).getY(), vertices.get(1).getY()), vertices.get(2).getY());
+        double maxZ = Math.max(Math.max(vertices.get(0).getZ(), vertices.get(1).getZ()), vertices.get(2).getZ());
+
+        return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+    }
 }

@@ -119,4 +119,19 @@ public class Plane extends Geometry {
 
         return List.of(new GeoPoint(this,ray.getPoint(t)));
     }
+
+    /**
+     * Returns the bounding box of the plane.
+     * Since a plane is infinite, this method returns an "infinite" bounding box.
+     *
+     * @return the bounding box of the plane
+     */
+    @Override
+    public AABB getBoundingBox() {
+        // A plane is infinite, so we return a "infinite" bounding box
+        return new AABB(
+                new Point(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY),
+                new Point(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+        );
+    }
 }

@@ -101,4 +101,31 @@ public class Point {
     public String toString() {
         return "Point(" + xyz.d1 + ", " + xyz.d2 + ", " + xyz.d3 + ")";
     }
+
+    /**
+     * getter for x of xyz
+     *
+     * @return the value x of the point
+     */
+    public double getX() {
+        return xyz.d1;
+    }
+
+    /**
+     * getter for y of xyz
+     *
+     * @return the value y of the point
+     */
+    public double getY() {
+        return xyz.d2;
+    }
+
+    /**
+     * getter for z of xyz
+     *
+     * @return the value z of the point
+     */
+    public double getZ() {
+        return xyz.d3;
+    }
 }
