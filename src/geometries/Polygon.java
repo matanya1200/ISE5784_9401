@@ -157,5 +157,6 @@ public class Polygon extends Geometry {
         }
 
         return new AABB(new Point(minX, minY, minZ), new Point(maxX, maxY, maxZ));
+
     }
 }
