@@ -4,7 +4,8 @@ import primitives.*;
 
 /**
  * The LightSource interface represents a light source in a 3D scene.
- * It defines methods to get the intensity of the light at a point and the direction to the light source from a point.
+ * It defines methods to get the intensity of the light at a point,
+ * the direction to the light source from a point, and the distance to the light source.
  */
 public interface LightSource {
     /**
@@ -22,5 +23,11 @@ public interface LightSource {
      */
     Vector getL(Point p);
 
+    /**
+     * Returns the distance from the light source to the specified point.
+     *
+     * @param point the point to which the distance is calculated
+     * @return the distance from the light source to the specified point
+     */
     double getDistance(Point point);
 }

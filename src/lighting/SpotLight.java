@@ -72,7 +72,7 @@ public class SpotLight extends PointLight {
      */
     @Override
     public Color getIntensity(Point p) {
-        //Il = i0*max(0,dir*l)/kc+kl*d+kq*d^2
+        // Il = i0 * max(0, dir * l) / (kc + kl * d + kq * d^2)
         Color pointLightIntensity = super.getIntensity(p);
         double projection = direction.dotProduct(getL(p));
         double factor = Math.max(0, projection);
@@ -93,6 +93,12 @@ public class SpotLight extends PointLight {
         return super.getL(p);
     }
 
+    /**
+     * Sets the narrow beam factor for the spot light.
+     *
+     * @param n the narrow beam factor to set, should be >= 1
+     * @return this SpotLight object for method chaining
+     */
     public LightSource setNarrowBeam(double n) {
         this.narrowBeam = n;
         return this;

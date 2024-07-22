@@ -65,9 +65,17 @@ public class Camera implements Cloneable {
      */
     private RayTracerBase rayTracer;
 
+    /**
+     * Flag for enabling or disabling multi-threading.
+     */
     private boolean useMultiThreading = false; // Default is false
 
-    // Method to enable Multi-Threading
+    /**
+     * Method to enable or disable multi-threading.
+     *
+     * @param useMultiThreading true to enable multi-threading, false to disable
+     * @return the current camera instance for chaining
+     */
     public Camera setMultiThreading(boolean useMultiThreading) {
         this.useMultiThreading = useMultiThreading;
         return this;
@@ -191,6 +199,8 @@ public class Camera implements Cloneable {
 
     /**
      * Renders the image by tracing rays through each pixel.
+     *
+     * @return the current camera instance for chaining
      */
     public Camera renderImage() {
         int nX = imageWriter.getNx();
@@ -263,6 +273,12 @@ public class Camera implements Cloneable {
         return this;
     }
 
+    /**
+     * Renders the image using anti-aliasing.
+     *
+     * @param numSamples the number of samples per pixel for anti-aliasing
+     * @return the current camera instance for chaining
+     */
     public Camera renderImageWithAntiAliasing(int numSamples) {
         if (imageWriter == null || rayTracer == null) {
             throw new MissingResourceException("Missing resources for rendering", "", "");
