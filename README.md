@@ -29,13 +29,21 @@
 
 ![image](https://github.com/user-attachments/assets/d3179b05-f792-4a89-9c80-4c9887739e4b)
 
+
+יצירת עץ:
+
+![image](https://github.com/user-attachments/assets/8877392b-ea9c-4926-8e66-3a465644d822)
+
+
+
 הוספת מקורות התאורה:
 
 ![image](https://github.com/user-attachments/assets/12ead4ae-752b-416f-b5ee-b69ff4690636)
 
 כך נראת התמונה הסופית:
 
-![image](https://github.com/user-attachments/assets/8b42efba-c1f8-4163-ab6b-f91d49f66546)
+![image](https://github.com/user-attachments/assets/c7eb4990-d308-48b9-9749-766d337702cf)
+
 
 ע"י הזזת המצלמה לנקדה הזו עם ווקטורי הכיוון האלו:
 
