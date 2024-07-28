@@ -129,7 +129,9 @@ public class SimpleRayTracer extends RayTracerBase {
      * @return the closest intersection point, or null if no intersection is found
      */
     private GeoPoint findClosestIntersection(Ray ray) {
-        return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
+//        return ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+        return ray.findClosestGeoPoint(intersections);
     }
 
     /**

@@ -123,6 +123,7 @@ public class Plane extends Geometry {
     /**
      * Returns the bounding box of the plane.
      * Since a plane is infinite, this method returns an "infinite" bounding box.
+     * we never use this fanc
      *
      * @return the bounding box of the plane
      */

@@ -2,17 +2,17 @@ package geometries;
 
 import primitives.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * The Geometries class represents a collection of geometric objects.
  * It is used to group multiple geometries together and perform operations on them as a whole.
  */
 public class Geometries extends Intersectable {
+
     private final List<Intersectable> geometries = new LinkedList<>();
+
+    private Intersectable root;
 
     private AABB boundingBox;
 
@@ -38,8 +38,11 @@ public class Geometries extends Intersectable {
      * @param geometries the geometries to add
      */
     public void add(Intersectable... geometries) {
-        Collections.addAll(this.geometries, geometries);
-        updateBoundingBox();
+        List<Intersectable> allGeometries = new ArrayList<>(Arrays.asList(geometries));
+        if (root != null) {
+            allGeometries.add(root);
+        }
+        root = new BVHNode(allGeometries);
     }
 
     /**
@@ -50,18 +53,19 @@ public class Geometries extends Intersectable {
      */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> Intersections = null;
-
-        for (Intersectable geometry : geometries) {
-            List<GeoPoint> tempGeoIntersections = geometry.findGeoIntersectionsHelper(ray);
-            if (tempGeoIntersections != null) {
-                if (Intersections == null) {
-                    Intersections = new ArrayList<>();
-                }
-                Intersections.addAll(tempGeoIntersections);
-            }
-        }
-        return Intersections;
+//        List<GeoPoint> Intersections = null;
+//
+//        for (Intersectable geometry : geometries) {
+//            List<GeoPoint> tempGeoIntersections = geometry.findGeoIntersectionsHelper(ray);
+//            if (tempGeoIntersections != null) {
+//                if (Intersections == null) {
+//                    Intersections = new ArrayList<>();
+//                }
+//                Intersections.addAll(tempGeoIntersections);
+//            }
+//        }
+//        return Intersections;
+        return root != null ? root.findGeoIntersections(ray) : null;
     }
 
     /**
@@ -71,7 +75,8 @@ public class Geometries extends Intersectable {
      */
     @Override
     public AABB getBoundingBox() {
-        return boundingBox;
+//        return boundingBox;
+        return root != null ? root.getBoundingBox() : null;
     }
 
     /**
