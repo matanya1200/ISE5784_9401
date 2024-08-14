@@ -394,8 +394,10 @@ public class minip1_v1 {
         setupScene();
         List<Intersectable> geometries = createGeometries();
 
+        List<Intersectable> sortedGeometries = scene.sortBoundingBoxesByZ(geometries);
+
         // Render with BVH
-        scene.geometries.add(new BVHNode(geometries));
+        scene.geometries.add(new BVHNode(sortedGeometries));
         renderImage("minip1_v1 without AA");
     }
 
@@ -406,7 +408,7 @@ public class minip1_v1 {
                 .setImageWriter(new ImageWriter(imageName, 800, 600))
                 .build()
                 .setMultiThreading(true)
-                .renderImage()
+                .renderImageWithAntiAliasing(80)
                 .writeToImage();
     }
 }

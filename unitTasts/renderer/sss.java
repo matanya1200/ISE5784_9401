@@ -71,7 +71,7 @@ public class sss {
                 .setVpDistance(100)
                 .setImageWriter(new ImageWriter("sss_without_bvh", 800, 600))
                 .build()
-                .setMultiThreading(false)
+                .setMultiThreading(true)
                 .renderImageWithAntiAliasing(30)
                 .writeToImage();
 
@@ -119,7 +119,7 @@ public class sss {
                 .setVpDistance(100)
                 .setImageWriter(new ImageWriter("sss_with_bvh", 800, 600))
                 .build()
-                .setMultiThreading(false)
+                .setMultiThreading(true)
                 .renderImageWithAntiAliasing(30)
                 .writeToImage();
 

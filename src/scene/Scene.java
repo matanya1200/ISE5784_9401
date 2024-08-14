@@ -1,10 +1,14 @@
 package scene;
 
+import geometries.AABB;
 import geometries.Geometries;
+import geometries.Intersectable;
 import lighting.AmbientLight;
 import lighting.LightSource;
 import primitives.Color;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,5 +83,29 @@ public class Scene {
      */
     public List<LightSource> getLights() {
         return lights;
+    }
+
+    /**
+     * פונקציה למיון רשימה של Intersectable לפי מרכז ה-Z של ה-Bounding Box שלהם.
+     *
+     * @param objects רשימה של אובייקטים מהסוג Intersectable
+     * @return רשימה ממוינת של Intersectable לפי ציר Z
+     */
+    public List<Intersectable> sortBoundingBoxesByZ(List<Intersectable> objects) {
+        Collections.sort(objects, new Comparator<Intersectable>() {
+            @Override
+            public int compare(Intersectable obj1, Intersectable obj2) {
+                // מקבלים את ה-Bounding Box של כל אובייקט
+                AABB box1 = obj1.getBoundingBox();
+                AABB box2 = obj2.getBoundingBox();
+
+                // חישוב מרכז ה-Z של ה-Bounding Box
+                double zCenter1 = (box1.getMin().getZ() + box1.getMax().getZ()) / 2;
+                double zCenter2 = (box2.getMin().getZ() + box2.getMax().getZ()) / 2;
+
+                return Double.compare(zCenter1, zCenter2);
+            }
+        });
+        return objects;
     }
 }
